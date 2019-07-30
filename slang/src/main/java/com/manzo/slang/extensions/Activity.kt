@@ -1,6 +1,7 @@
 package com.manzo.slang.extensions
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.net.Uri
 
@@ -53,5 +54,25 @@ fun Activity.sendEmail(
     }.run {
         startActivity(this)
     }
+}
+
+
+inline fun <reified T : Activity> Activity.startActivityNewTask() {
+    Intent(this, T::class.java)
+        .apply {
+            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        }.run {
+            startActivity(this)
+        }
+}
+
+inline fun <reified T : Activity> Context.startActivity() {
+    Intent(this, T::class.java)
+        .apply {
+            //flag FLAG_ACTIVITY_NEW_TASK when trying to start new activity from out of Activity context todo test
+            if (this !is Activity) flags = Intent.FLAG_ACTIVITY_NEW_TASK
+        }.let {
+            startActivity(it)
+        }
 }
 

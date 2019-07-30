@@ -9,9 +9,6 @@ import android.support.annotation.DrawableRes
 import android.support.annotation.LayoutRes
 import android.support.constraint.Group
 import android.support.design.widget.Snackbar
-import android.transition.AutoTransition
-import android.transition.Transition
-import android.transition.TransitionManager
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View

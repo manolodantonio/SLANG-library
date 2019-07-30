@@ -1,7 +1,6 @@
 package com.manzo.slang.navigation
 
 import android.app.Activity
-import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.support.v4.app.FragmentManager.POP_BACK_STACK_INCLUSIVE
@@ -25,16 +24,6 @@ abstract class BaseActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN)
-    }
-
-
-    fun <T : BaseActivity> startActivityNewTask(packageContext: Activity, clazz: Class<T>) {
-        Intent(packageContext, clazz)
-            .apply {
-                flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-            }.run {
-                packageContext.startActivity(this)
-            }
     }
 
     fun closeApplication(activity: Activity) {
@@ -91,14 +80,17 @@ abstract class BaseActivity : AppCompatActivity() {
         return newStack
     }
 
-    fun navigateBack() {
-        supportFragmentManager.run {
-            if (backStackEntryCount > 0) popBackStack()
+    fun navigateBack(): Boolean {
+        return supportFragmentManager.run {
+            if (backStackEntryCount > 0) {
+                popBackStack()
+                true
+            } else false
         }
     }
 
-    fun <T> navigateBackTo(targetFragment: Class<T>) {
-        supportFragmentManager.run {
+    fun <T> navigateBackTo(targetFragment: Class<T>): Boolean {
+        return supportFragmentManager.run {
             findFragmentByTag(targetFragment.simpleName)?.let {
                 popBackStackImmediate(targetFragment.simpleName, 0).run {
                     if (!this && fragments.size > 1) {
@@ -108,9 +100,9 @@ abstract class BaseActivity : AppCompatActivity() {
                             popBackStackImmediate(first.javaClass.simpleName, POP_BACK_STACK_INCLUSIVE)
                         }
 
-                    }
+                    } else this
                 }
-            }
+            } ?: false
         }
     }
 

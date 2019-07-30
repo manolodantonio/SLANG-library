@@ -18,7 +18,42 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/../CommissioningApp/app/build.gradle">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../CommissioningApp/app/proguard-rules.pro">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../CommissioningApp/app/src/main/java/com/accenture/edge/next/commissioningapp/data/model/Constants.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../CommissioningApp/app/src/main/java/com/accenture/edge/next/commissioningapp/data/model/Entities.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../CommissioningApp/app/src/main/java/com/accenture/edge/next/commissioningapp/data/network/BootstrapManager.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../CommissioningApp/app/src/main/java/com/accenture/edge/next/commissioningapp/data/network/controllers/BaseController.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/../CommissioningApp/app/src/main/java/com/accenture/edge/next/commissioningapp/logic/Extensions.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../CommissioningApp/app/src/main/java/com/accenture/edge/next/commissioningapp/logic/ShellUtils.kt">
           <value>
             <set />
           </value>
@@ -28,7 +63,72 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/../CommissioningApp/app/src/main/java/com/accenture/edge/next/commissioningapp/ui/viewModel/BaseModel.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../CommissioningApp/app/src/main/java/com/accenture/edge/next/commissioningapp/ui/viewModel/BootstrapViewModel.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../CommissioningApp/app/src/main/java/com/accenture/edge/next/commissioningapp/ui/views/ApplicationOverride.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../CommissioningApp/app/src/main/java/com/accenture/edge/next/commissioningapp/ui/views/LoginActivity.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../CommissioningApp/app/src/main/java/com/accenture/edge/next/commissioningapp/ui/views/MainActivity.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../CommissioningApp/app/src/main/java/com/accenture/edge/next/commissioningapp/ui/views/abstracts/BaseActivity.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../CommissioningApp/app/src/main/java/com/accenture/edge/next/commissioningapp/ui/views/abstracts/BaseFragment.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../CommissioningApp/app/src/main/java/com/accenture/edge/next/commissioningapp/ui/views/fragments/GatewayDetailsFragment.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../CommissioningApp/app/src/main/java/com/accenture/edge/next/commissioningapp/ui/views/fragments/LoginFragment.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/../CommissioningApp/app/src/main/java/com/accenture/edge/next/commissioningapp/ui/views/fragments/LogsDetailFragment.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../CommissioningApp/app/src/main/java/com/accenture/edge/next/commissioningapp/ui/views/fragments/UserSettingsFragment.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../CommissioningApp/app/src/main/java/com/accenture/edge/next/commissioningapp/ui/views/fragments/WizardBootstrapFragment.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../CommissioningApp/app/src/main/java/com/accenture/edge/next/commissioningapp/ui/views/fragments/WizardConnectFragment.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../CommissioningApp/app/src/main/res/layout/fragment_login.xml">
           <value>
             <set />
           </value>
@@ -38,7 +138,47 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/../CommissioningApp/app/src/main/res/layout/fragment_user_settings.xml">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../CommissioningApp/app/src/main/res/values/colors.xml">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../CommissioningApp/app/src/main/res/values/commands.xml">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../CommissioningApp/app/src/main/res/values/strings.xml">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../CommissioningApp/app/src/test/java/com/accenture/edge/next/commissioningapp/logic/UtilsKtTest.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../CommissioningApp/build.gradle">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../fca_uconnect_android/app/src/main/java/com/fcagroup/global/myuconnect/utils/AndroidUtils.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/app/build.gradle">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/androidTest/java/com/manzo/slang/ExampleInstrumentedTest.kt">
           <value>
             <set />
           </value>
@@ -63,7 +203,17 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/build.gradle">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/slang/build.gradle">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/slang/src/main/java/com/manzo/slang/extensions/Activity.kt">
           <value>
             <set />
           </value>
@@ -74,6 +224,11 @@
           </value>
         </entry>
         <entry key="$PROJECT_DIR$/slang/src/main/java/com/manzo/slang/extensions/CollectionsExt.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/slang/src/main/java/com/manzo/slang/extensions/Context.kt">
           <value>
             <set />
           </value>

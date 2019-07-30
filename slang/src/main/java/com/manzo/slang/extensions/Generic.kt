@@ -6,7 +6,6 @@ import android.net.wifi.WifiManager
 import android.os.Handler
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import kotlinx.coroutines.suspendCancellableCoroutine
 import java.io.File
 import java.io.IOException
 import java.net.InetAddress
@@ -15,7 +14,6 @@ import java.net.Socket
 import java.nio.ByteBuffer
 import java.nio.ByteOrder
 import java.util.*
-import kotlin.coroutines.resume
 
 /**
  * Created by Manolo D'Antonio on 19/07/2019
@@ -60,14 +58,15 @@ fun <T> Gson.fromJsonToList(json: String, model: Class<T>): List<T> {
     return this.fromJson(json, object : TypeToken<List<T>>() {}.type)
 }
 
-
-fun delay(waitMillis: Long = 1000, block: () -> Unit) {
-    Handler().postDelay(waitMillis, block)
+/**
+ * Delays operations in the block function
+ * @param waitMillis Long
+ * @param block Function0<Unit>
+ */
+fun delayed(waitMillis: Long = 1000, block: () -> Unit) {
+    Handler().postDelayed(block, waitMillis)
 }
 
-fun Handler.postDelay(waitMillis: Long, block: () -> Unit) {
-    this.postDelayed({ block.invoke() }, waitMillis)
-}
 
 fun isNetworkAvailable(context: Context): Boolean {
     val connectivityManager: ConnectivityManager =
