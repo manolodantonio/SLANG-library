@@ -59,3 +59,12 @@ fun List<File>.addToZip(zipFile: File) =
  */
 fun File.findLine(query: String) =
     bufferedReader().readLines().firstOrNull { it.contains(query) } ?: ""
+
+
+/**
+ * Searches the file and returns the first line containing the query, or null.
+ * @param query String
+ * @return String
+ */
+fun File.findLineOrNull(query: String) =
+    bufferedReader().readLines().firstOrNull { it.contains(query) }

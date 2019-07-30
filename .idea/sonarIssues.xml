@@ -253,12 +253,27 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/slang/src/main/java/com/manzo/slang/extensions/Exception.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/slang/src/main/java/com/manzo/slang/extensions/ExceptionExt.kt">
           <value>
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/slang/src/main/java/com/manzo/slang/extensions/File.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/slang/src/main/java/com/manzo/slang/extensions/FileExt.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/slang/src/main/java/com/manzo/slang/extensions/Generic.kt">
           <value>
             <set />
           </value>
@@ -288,7 +303,17 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/slang/src/main/java/com/manzo/slang/extensions/String.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/slang/src/main/java/com/manzo/slang/extensions/StringExt.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/slang/src/main/java/com/manzo/slang/extensions/View.kt">
           <value>
             <set />
           </value>

@@ -1,9 +1,11 @@
 package com.manzo.slang.extensions
 
+import android.Manifest
 import android.content.Context
 import android.net.ConnectivityManager
 import android.net.wifi.WifiManager
 import android.os.Handler
+import android.support.annotation.RequiresPermission
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import java.io.File
@@ -47,7 +49,9 @@ fun <T> T.serializeToMap(): Map<String, Any> = convert()
 inline fun <reified T> Map<String, Any>.toDataClass(): T = convert()
 
 /**
- * convert an object of type I to type O
+ * convert an object of type I to type O via Gson.
+ *
+ * By ColonelCustard from https://stackoverflow.com/a/56347214/4473512
  */
 inline fun <I, reified O> I.convert(): O {
     val json = Gson().toJson(this)
@@ -67,7 +71,12 @@ fun delayed(waitMillis: Long = 1000, block: () -> Unit) {
     Handler().postDelayed(block, waitMillis)
 }
 
-
+/**
+ * Checks network. Requires ACCESS_NETWORK_STATE permission.
+ * @param context Context
+ * @return Boolean
+ */
+@RequiresPermission(Manifest.permission.ACCESS_NETWORK_STATE)
 fun isNetworkAvailable(context: Context): Boolean {
     val connectivityManager: ConnectivityManager =
         context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
@@ -75,10 +84,21 @@ fun isNetworkAvailable(context: Context): Boolean {
     return activeNetworkInfo != null && activeNetworkInfo.isConnected
 }
 
+/**
+ * Negation of [isNetworkAvailable]
+ * @param context Context
+ * @return Boolean
+ */
+@RequiresPermission(Manifest.permission.ACCESS_NETWORK_STATE)
 fun isNetworkUnavailable(context: Context) = !isNetworkAvailable(context)
 
-
-fun getMyIP(context: Context): String {
+/**
+ * Retrieves device IP address from wifi. Requires ACCESS_WIFI_STATE permission.
+ * @param context Context
+ * @return String
+ */
+@RequiresPermission(Manifest.permission.ACCESS_WIFI_STATE)
+fun getMyIPfromWifi(context: Context): String {
     return (context.applicationContext.getSystemService(Context.WIFI_SERVICE) as WifiManager)
         .run {
             connectionInfo.ipAddress
@@ -105,25 +125,25 @@ fun getMyIP(context: Context): String {
 fun getHostName(hostIp: String): String = InetAddress.getByName(hostIp).canonicalHostName
 
 /**
- * Searches ARP table for a MAC address matching the provided IP
+ * Searches ARP table of the device for a MAC address matching the provided IP
  * @param ipAddress String
  * @return String
  */
-fun getMacAddress(ipAddress: String) =
+fun getMacFromARP(ipAddress: String) =
     File("/proc/net/arp").run {
         findLine(ipAddress).findMAC()
     }
 
 
 /**
- *
+ * Returns a list of Pair<IpAddres, MacAddress>
  * @param ipList List<String>
  * @return List<Pair<String, String>>
  */
-fun getMacAddress(ipList: List<String>): List<Pair<String, String>> {
+fun getMacFromARP(ipList: List<String>): List<Pair<String, String>> {
     val result = mutableListOf<Pair<String, String>>()
     ipList.forEach {
-        result.add(Pair(it, getMacAddress(it)))
+        result.add(Pair(it, getMacFromARP(it)))
     }
     return result
 }
@@ -162,12 +182,19 @@ fun checkAddressReachable(address: String, port: Int = 22, scanTimeoutMillis: In
     }
 }
 
-
+/**
+ *
+ * @return String
+ */
 fun generateRandomHex(): String =
     Integer.toHexString(Random().nextInt())
 
-
-fun getCurrentClock(printSeconds: Boolean = false): String {
+/**
+ *
+ * @param printSeconds Boolean
+ * @return String
+ */
+fun getTime(printSeconds: Boolean = false): String {
     GregorianCalendar().run {
         val hour = get(Calendar.HOUR_OF_DAY)
         val minute = get(Calendar.MINUTE)

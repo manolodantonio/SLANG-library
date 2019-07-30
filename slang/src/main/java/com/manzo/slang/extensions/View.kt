@@ -9,6 +9,9 @@ import android.support.annotation.DrawableRes
 import android.support.annotation.LayoutRes
 import android.support.constraint.Group
 import android.support.design.widget.Snackbar
+import android.support.transition.AutoTransition
+import android.support.transition.Transition
+import android.support.transition.TransitionManager
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -18,6 +21,10 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.ImageView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 /**
  * Hide softKeyboard
@@ -72,11 +79,20 @@ fun View?.invisibleIf(shouldBeInvisible: Boolean): View? {
 }
 
 /**
- * Ex function for changing visibility by condition
+ * Ex function for changing visibility by condition block
  */
-fun View?.goneIf(shouldBeGone: Boolean): View? {
+fun View?.invisibleIf(shouldBeInvisible: () -> Boolean): View? {
     this ?: return this
-    if (shouldBeGone) gone() else visible()
+    if (shouldBeInvisible.invoke()) invisible() else visible()
+    return this
+}
+
+/**
+ * Ex function for changing visibility by condition block
+ */
+fun View?.goneIf(shouldBeGone: () -> Boolean): View? {
+    this ?: return this
+    if (shouldBeGone.invoke()) gone() else visible()
     return this
 }
 
@@ -106,7 +122,11 @@ fun View?.switchGoneVisible(): View? {
  *
  * ie: view.gone().withTransition()
  */
-fun View?.withTransition(viewGroup: ViewGroup? = null, animationTime: Long = -1, transition: android.support.transition.Transition? = null) {
+fun View?.withTransition(
+    viewGroup: ViewGroup? = null,
+    animationTime: Long = -1,
+    transition: Transition? = null
+) {
     this ?: return
     when {
         viewGroup != null -> viewGroup.startTransition(animationTime, transition)
@@ -121,35 +141,35 @@ fun View?.withTransition(viewGroup: ViewGroup? = null, animationTime: Long = -1,
  */
 fun ViewGroup?.startTransition(
     animationTime: Long = -1,
-    transition: android.support.transition.Transition? = null,
+    transition: Transition? = null,
     onEndListener: (() -> Unit)? = null
 ) {
     this ?: return
-    android.support.transition.TransitionManager.beginDelayedTransition(
+    TransitionManager.beginDelayedTransition(
         this,
         run {
-            (transition ?: android.support.transition.AutoTransition())
+            (transition ?: AutoTransition())
                 .apply { if (animationTime != -1L) this.duration = animationTime }
                 .apply {
                     onEndListener?.let {
-                        this.addListener(object : android.support.transition.Transition.TransitionListener {
-                            override fun onTransitionEnd(p0: android.support.transition.Transition) {
+                        this.addListener(object : Transition.TransitionListener {
+                            override fun onTransitionEnd(p0: Transition) {
                                 it.invoke()
                             }
 
-                            override fun onTransitionResume(p0: android.support.transition.Transition) {
+                            override fun onTransitionResume(p0: Transition) {
                                 //not used
                             }
 
-                            override fun onTransitionPause(p0: android.support.transition.Transition) {
+                            override fun onTransitionPause(p0: Transition) {
                                 //not used
                             }
 
-                            override fun onTransitionCancel(p0: android.support.transition.Transition) {
+                            override fun onTransitionCancel(p0: Transition) {
                                 //not used
                             }
 
-                            override fun onTransitionStart(p0: android.support.transition.Transition) {
+                            override fun onTransitionStart(p0: Transition) {
                                 //not used
                             }
 
@@ -168,21 +188,34 @@ fun ViewGroup.inflate(@LayoutRes layoutRes: Int, attachToRoot: Boolean = false):
     return this.run { LayoutInflater.from(context).inflate(layoutRes, this, attachToRoot) }
 }
 
+var snackAvailable = true
 /**
- * Extension function for snackbars
+ * Shows a snackbar, SHORT by default
+ * @receiver View
+ * @param message String
+ * @param duration Int
+ * @param blockSnacksTimer will block other invocations of this function for the next N milliseconds
+ *
  */
-inline fun View.snack(message: String, length: Int = Snackbar.LENGTH_LONG, f: Snackbar.() -> Unit) {
-    val snack = Snackbar.make(this, message, length)
-    snack.f()
-    snack.show()
+fun View.snack(message: String, duration: Int = Snackbar.LENGTH_SHORT, blockSnacksTimer: Long = 0) {
+    if (snackAvailable) {
+        if (blockSnacksTimer > 0) snackAvailable = false
+        GlobalScope.launch(Dispatchers.Main) {
+            Snackbar.make(this@snack, message, duration).show()
+            if (blockSnacksTimer > 0) {
+                launch {
+                    delay(blockSnacksTimer)
+                    snackAvailable = true
+                }
+            }
+        }
+    }
 }
-
 
 /**
  * Extension method to provide simpler access to {@link View#getResources()#getString(int)}.
  */
 fun View.string(stringResId: Int): String = context.string(stringResId)
-
 
 
 /**

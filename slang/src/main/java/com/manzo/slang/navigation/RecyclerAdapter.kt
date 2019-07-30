@@ -9,8 +9,6 @@ import android.util.SparseArray
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.manzo.slang.extensions.asSafeMutable
-import java.util.Collections.addAll
 
 abstract class RecyclerAdapter<T>(dataset: MutableList<T> = mutableListOf()) :
     RecyclerView.Adapter<RecyclerAdapter<T>.ViewHolder>() {
@@ -160,7 +158,7 @@ fun <T> RecyclerView.init(context: Context, myAdapter: RecyclerAdapter<T>, numbe
  * @param rowLayout Int
  * @param emptyLayout Int
  * @param onBindEmpty Function1<[@kotlin.ParameterName] ViewHolder<E>, Unit>?
- * @param onBindContent Function3<[@kotlin.ParameterName] ViewHolder<E>, [@kotlin.ParameterName] Int, [@kotlin.ParameterName] E, Unit>
+ * @param onBindContent Function2<[@kotlin.ParameterName] ViewHolder<E>, [@kotlin.ParameterName] Int, [@kotlin.ParameterName] E, Unit>
  * @return RecyclerAdapter<E>
  */
 fun <E> MutableList<E>.toAdapter(

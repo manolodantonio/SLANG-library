@@ -6,7 +6,7 @@ import android.content.Intent
 import android.net.Uri
 
 /**
- * Created by Manolo D'Antonio on 19/07/2019
+ * Created by Manolo D'Antonio
  */
 
 /**
@@ -16,15 +16,6 @@ import android.net.Uri
 fun Activity.closeKeyboard() = currentFocus?.closeKeyboard()
 
 
-
-/**
- * Save app log to target file
- * @receiver Activity
- * @param targetFile String
- * @return File
- */
-fun Activity.saveLogsToFile(targetFile: String) =
-    getLogs().writeToInternalFile(this, targetFile)
 
 /**
  *
@@ -56,20 +47,26 @@ fun Activity.sendEmail(
     }
 }
 
-
-inline fun <reified T : Activity> Activity.startActivityNewTask() {
+/**
+ * Starts new activity and clears previous task.
+ * @receiver Context
+ */
+inline fun <reified T : Activity> Context.startActivityNewTask() {
     Intent(this, T::class.java)
         .apply {
             flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-        }.run {
-            startActivity(this)
+        }.let {
+            startActivity(it)
         }
 }
 
+/**
+ * Starts new activity. Adds FLAG_ACTIVITY_NEW_TASK when trying to start new activity from out of Activity context
+ * @receiver Context
+ */
 inline fun <reified T : Activity> Context.startActivity() {
     Intent(this, T::class.java)
         .apply {
-            //flag FLAG_ACTIVITY_NEW_TASK when trying to start new activity from out of Activity context todo test
             if (this !is Activity) flags = Intent.FLAG_ACTIVITY_NEW_TASK
         }.let {
             startActivity(it)

@@ -1,8 +1,7 @@
 package com.manzo.slang.extensions
 
-import android.app.Activity
+import android.content.Context
 import android.util.Base64
-import android.util.Log
 import org.json.JSONArray
 import org.json.JSONObject
 import org.json.JSONTokener
@@ -58,7 +57,7 @@ fun String.toBase64(): String {
         }
     } catch (e1: UnsupportedEncodingException) {
         e1.logError()
-        ""
+        this
     }
 }
 
@@ -69,8 +68,8 @@ fun String.fromBase64(): String {
     return try {
         String(Base64.decode(this, Base64.DEFAULT))
     } catch (e1: UnsupportedEncodingException) {
-        e1.printStackTrace()
-        ""
+        e1.logError()
+        this
     }
 }
 
@@ -80,17 +79,19 @@ fun String.fromBase64(): String {
  */
 fun String?.isNotNullOrBlank() = !isNullOrBlank()
 
+/**
+ * Extension function for negating isNullOrBlank
+ */
 fun CharSequence?.isNotNullOrBlank() = !isNullOrBlank()
 
 /**
  * Write string to a target file. Creates the file if needed.
  */
-fun String.writeToInternalFile(activity: Activity, filename: String) =
-    activity.getInternalFile(filename)
+fun String.writeToInternalFile(context: Context, filename: String) =
+    context.getInternalFile(filename)
         .apply {
             writeText(this@writeToInternalFile)
         }
-
 
 
 /**
@@ -118,11 +119,13 @@ fun String.truncateTo(len: Int): String {
 }
 
 
-
 /**
- * Try convert a string to Json and output pretty print
+ * Convert a string to Json and output pretty print
+ * @receiver String
+ * @param indentSpaces Int
+ * @return String?
  */
-fun String.jsonPrettyPrint(indentSpaces: Int = 2): String? {
+fun String.jsonPrettyPrint(indentSpaces: Int = 2): String {
     return try {
         JSONTokener(this).nextValue().let { token ->
             when (token) {
@@ -131,7 +134,7 @@ fun String.jsonPrettyPrint(indentSpaces: Int = 2): String? {
             }
         }
     } catch (e: Exception) {
-        Log.e("SLANG","Failed pretty print")
+        e.logError()
         this
     }
 }
@@ -143,5 +146,16 @@ fun String.jsonPrettyPrint(indentSpaces: Int = 2): String? {
  * @return String
  */
 fun String.findMAC() = REGEX_MAC_ADDRESS.toRegex().find(this)?.value ?: ""
+
+/**
+ * Returns the first mac address in the string, or null.
+ * @receiver String
+ * @return String
+ */
+fun String.findMACOrNull() = REGEX_MAC_ADDRESS.toRegex().find(this)?.value
+
+/**
+ * Used in [String.findMAC]
+ */
 const val REGEX_MAC_ADDRESS = "([\\da-fA-f]{2}[:-]){5}[\\da-fA-f]{2}"
 

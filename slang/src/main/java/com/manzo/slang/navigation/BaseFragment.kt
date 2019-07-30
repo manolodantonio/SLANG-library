@@ -26,7 +26,7 @@ abstract class BaseFragment : Fragment(), FragmentOnBackPressed {
 
     var positionInBackstack = -1
 
-    val activity by lazy { this.getActivity() as BaseActivity }
+    val activity by lazy { getActivity() as BaseActivity }
 
     protected abstract fun setLayout(): Int
     protected abstract fun setupInterface(view: View, savedInstanceState: Bundle?)
