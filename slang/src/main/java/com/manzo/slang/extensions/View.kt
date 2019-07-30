@@ -79,6 +79,15 @@ fun View?.invisibleIf(shouldBeInvisible: Boolean): View? {
 }
 
 /**
+ * Ex function for changing visibility by condition
+ */
+fun View?.goneIf(shouldBeGone: Boolean): View? {
+    this ?: return this
+    if (shouldBeGone) gone() else visible()
+    return this
+}
+
+/**
  * Ex function for changing visibility by condition block
  */
 fun View?.invisibleIf(shouldBeInvisible: () -> Boolean): View? {
