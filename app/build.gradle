@@ -33,5 +33,5 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
     implementation 'com.google.code.gson:gson:2.8.5'
 //    implementation 'com.github.manolodantonio:SLANG-library:0.1.0'
-//    implementation project(path: ':slang')
+    implementation project(path: ':slang')
 }

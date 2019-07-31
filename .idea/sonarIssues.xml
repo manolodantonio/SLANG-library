@@ -48,6 +48,16 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/../CommissioningApp/app/src/main/java/com/accenture/edge/next/commissioningapp/data/network/controllers/LoginController.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../CommissioningApp/app/src/main/java/com/accenture/edge/next/commissioningapp/data/network/services/BootstrapService.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/../CommissioningApp/app/src/main/java/com/accenture/edge/next/commissioningapp/logic/Extensions.kt">
           <value>
             <set />
@@ -63,12 +73,62 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/../CommissioningApp/app/src/main/java/com/accenture/edge/next/commissioningapp/ui/adapters/BootstrapSettingsAdapter.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../CommissioningApp/app/src/main/java/com/accenture/edge/next/commissioningapp/ui/adapters/DeviceDetailAdapter.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../CommissioningApp/app/src/main/java/com/accenture/edge/next/commissioningapp/ui/adapters/GatewayDetailAdapter.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../CommissioningApp/app/src/main/java/com/accenture/edge/next/commissioningapp/ui/adapters/GatewaysAdapter.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../CommissioningApp/app/src/main/java/com/accenture/edge/next/commissioningapp/ui/adapters/SettingsMenuAdapter.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/../CommissioningApp/app/src/main/java/com/accenture/edge/next/commissioningapp/ui/viewModel/BaseModel.kt">
           <value>
             <set />
           </value>
         </entry>
         <entry key="$PROJECT_DIR$/../CommissioningApp/app/src/main/java/com/accenture/edge/next/commissioningapp/ui/viewModel/BootstrapViewModel.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../CommissioningApp/app/src/main/java/com/accenture/edge/next/commissioningapp/ui/viewModel/DeviceDetailViewModel.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../CommissioningApp/app/src/main/java/com/accenture/edge/next/commissioningapp/ui/viewModel/GatewayDetailViewModel.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../CommissioningApp/app/src/main/java/com/accenture/edge/next/commissioningapp/ui/viewModel/GatewayViewModel.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../CommissioningApp/app/src/main/java/com/accenture/edge/next/commissioningapp/ui/viewModel/SettingsModel.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../CommissioningApp/app/src/main/java/com/accenture/edge/next/commissioningapp/ui/views/AboutActivity.kt">
           <value>
             <set />
           </value>
@@ -88,6 +148,11 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/../CommissioningApp/app/src/main/java/com/accenture/edge/next/commissioningapp/ui/views/SettingsActivity.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/../CommissioningApp/app/src/main/java/com/accenture/edge/next/commissioningapp/ui/views/abstracts/BaseActivity.kt">
           <value>
             <set />
@@ -103,7 +168,17 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/../CommissioningApp/app/src/main/java/com/accenture/edge/next/commissioningapp/ui/views/fragments/DeviceDetailFragment.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/../CommissioningApp/app/src/main/java/com/accenture/edge/next/commissioningapp/ui/views/fragments/GatewayDetailsFragment.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../CommissioningApp/app/src/main/java/com/accenture/edge/next/commissioningapp/ui/views/fragments/GatewaysFragment.kt">
           <value>
             <set />
           </value>
@@ -114,6 +189,16 @@
           </value>
         </entry>
         <entry key="$PROJECT_DIR$/../CommissioningApp/app/src/main/java/com/accenture/edge/next/commissioningapp/ui/views/fragments/LogsDetailFragment.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../CommissioningApp/app/src/main/java/com/accenture/edge/next/commissioningapp/ui/views/fragments/RemoteDetailFragment.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../CommissioningApp/app/src/main/java/com/accenture/edge/next/commissioningapp/ui/views/fragments/ShowLogFragment.kt">
           <value>
             <set />
           </value>
@@ -238,6 +323,11 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/slang/src/main/java/com/manzo/slang/extensions/Coroutine.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/slang/src/main/java/com/manzo/slang/extensions/CoroutineExt.kt">
           <value>
             <set />
@@ -289,6 +379,11 @@
           </value>
         </entry>
         <entry key="$PROJECT_DIR$/slang/src/main/java/com/manzo/slang/extensions/LiveDataExt.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/slang/src/main/java/com/manzo/slang/extensions/Long.kt">
           <value>
             <set />
           </value>
