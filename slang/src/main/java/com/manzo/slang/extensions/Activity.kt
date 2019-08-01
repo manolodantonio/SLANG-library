@@ -4,9 +4,8 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
-import android.support.v4.app.ActivityCompat
 import android.support.v4.app.Fragment
-import android.util.Log
+import com.manzo.slang.extensions.gears.checkPermissions
 
 /**
  * Created by Manolo D'Antonio
@@ -117,31 +116,25 @@ private fun Intent.start(context: Context): Boolean {
     } ?: false
 }
 
+
 /**
- *
- * @param fragmentOrActivity Any?
+ * Fragment extension for [checkPermissions]
+ * @receiver Fragment
  * @param requestCode Int
  * @param permissions Array<out String>
  * @return Boolean
  */
-fun checkPermissions(fragmentOrActivity: Any?, requestCode: Int, vararg permissions: String): Boolean {
-    val context = when (fragmentOrActivity) {
-        is Fragment -> fragmentOrActivity.context
-        is Activity -> fragmentOrActivity
-        else -> {
-            Log.e("checkPermission Error", "fragmentOrActivity.. is not a Fragment or an Activity!")
-            return false
-        }
-    } ?: return false
+fun Fragment.checkPermissions(requestCode: Int, vararg permissions: String) =
+    checkPermissions(this, requestCode, *permissions)
 
-    return if (context.hasPermissions(*permissions)) {
-        true
-    } else {
-        when (fragmentOrActivity) {
-            is Fragment -> fragmentOrActivity.requestPermissions(permissions, requestCode)
-            is Activity -> ActivityCompat.requestPermissions(fragmentOrActivity, permissions, requestCode)
-        }
-        false
-    }
-}
+/**
+ * Activity extension for [checkPermissions]
+ * @receiver Activity
+ * @param requestCode Int
+ * @param permissions Array<out String>
+ * @return Boolean
+ */
+fun Activity.checkPermissions(requestCode: Int, vararg permissions: String) =
+    checkPermissions(this, requestCode, *permissions)
+
 

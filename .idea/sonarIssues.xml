@@ -403,6 +403,11 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/slang/src/main/java/com/manzo/slang/extensions/Private.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/slang/src/main/java/com/manzo/slang/extensions/RecyclerView.kt">
           <value>
             <set />
@@ -429,6 +434,16 @@
           </value>
         </entry>
         <entry key="$PROJECT_DIR$/slang/src/main/java/com/manzo/slang/extensions/ViewExt.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/slang/src/main/java/com/manzo/slang/extensions/gears/Private.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/slang/src/main/java/com/manzo/slang/gears.kt">
           <value>
             <set />
           </value>
