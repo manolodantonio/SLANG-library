@@ -23,6 +23,11 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/../CommissioningApp/app/buildscripts/jacoco.gradle">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/../CommissioningApp/app/proguard-rules.pro">
           <value>
             <set />

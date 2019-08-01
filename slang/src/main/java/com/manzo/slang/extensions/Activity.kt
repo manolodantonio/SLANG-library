@@ -31,8 +31,8 @@ fun Activity.sendEmail(
     message: String? = null,
     attachFileUri: Uri? = null
 ) {
-    Intent(Intent.ACTION_SEND).apply {
-        type = "text/plain"
+    Intent(Intent.ACTION_SENDTO).apply {
+        data = Uri.parse("mailto:")
 
         recipients?.let { putExtra(Intent.EXTRA_EMAIL, it) }
         subject?.let { putExtra(Intent.EXTRA_SUBJECT, it) }
@@ -43,7 +43,8 @@ fun Activity.sendEmail(
         }
 
     }.run {
-        startActivity(this)
+        resolveActivity(packageManager)?.let { startActivity(this) }
+
     }
 }
 

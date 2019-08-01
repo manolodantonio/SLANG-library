@@ -205,3 +205,12 @@ fun getTime(printSeconds: Boolean = false): String {
         }
     }
 }
+
+/**
+ * Executes block only if receiver is not null.
+ * @receiver Any?
+ * @param block Function0<Unit>
+ */
+infix fun Any?.nn(block: () -> Unit) {
+    this?.let { block.invoke() }
+}
