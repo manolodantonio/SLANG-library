@@ -7,5 +7,3 @@ import android.graphics.drawable.Drawable
  */
 fun Drawable.copy() =
         mutate().constantState?.newDrawable()
-
-

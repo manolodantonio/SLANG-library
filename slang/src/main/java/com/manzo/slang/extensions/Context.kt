@@ -1,8 +1,13 @@
 package com.manzo.slang.extensions
 
+import android.Manifest
+import android.annotation.TargetApi
+import android.app.Activity
 import android.content.Context
+import android.content.Intent
 import android.content.SharedPreferences
 import android.content.pm.PackageManager
+import android.os.Build
 import android.preference.PreferenceManager
 import android.support.annotation.*
 import android.support.v4.content.ContextCompat
@@ -100,11 +105,13 @@ fun Context.boolean(@BoolRes resource: Int): Boolean {
 /**
  * Check if fingerprint auth is available
  */
+@TargetApi(Build.VERSION_CODES.M)
+@RequiresPermission(Manifest.permission.USE_FINGERPRINT)
 fun Context.isFingerprintAvailable(): Boolean {
-    return if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.N)
+    return if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N)
         false
     else
-        FingerprintManagerCompat.from(this).isHardwareDetected //todo
+        FingerprintManagerCompat.from(this).isHardwareDetected
 
 }
 
@@ -149,6 +156,39 @@ fun Context.hasPermissions(vararg permissions: String): Boolean {
     return true
 }
 
+/**
+ * Negates [hasPermissions]
+ * @receiver Context
+ * @param permissions Array<out String>
+ * @return Boolean
+ */
 fun Context.hasNotPermissions(vararg permissions: String): Boolean {
     return !hasPermissions(*permissions)
+}
+
+
+/**
+ * Starts new activity and clears previous task.
+ * @receiver Context
+ */
+inline fun <reified T : Activity> Context.startActivityNewTask() {
+    Intent(this, T::class.java)
+        .apply {
+            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        }.let {
+            startActivity(it)
+        }
+}
+
+/**
+ * Starts new activity. Adds FLAG_ACTIVITY_NEW_TASK when trying to start new activity from out of Activity context
+ * @receiver Context
+ */
+inline fun <reified T : Activity> Context.startActivity() {
+    Intent(this, T::class.java)
+        .apply {
+            if (this !is Activity) flags = Intent.FLAG_ACTIVITY_NEW_TASK
+        }.let {
+            startActivity(it)
+        }
 }
