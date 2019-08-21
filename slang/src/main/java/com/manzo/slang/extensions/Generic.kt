@@ -59,13 +59,17 @@ inline fun <I, reified O> I.convert(): O {
 }
 
 /**
- * Returns a list of the specified model class
+ * Returns a list of the specified model class. Usage:
+ *
+ *
+ * Gson().fromJsonToList'<'Model'>'(jsonListString) // Gson().fromJsonToList(jsonListString, Model::class.java)
+ *
  * @receiver Gson
  * @param json String
  * @param model T
  * @return List<T>
  */
-fun <T> Gson.fromJsonToList(json: String, model: T): List<T> {
+fun <T> Gson.fromJsonToList(json: String, model: T? = null): List<T> {
     return this.fromJson(json, object : TypeToken<List<T>>() {}.type)
 }
 
