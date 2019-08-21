@@ -2,6 +2,7 @@ package com.manzo.slang.extensions
 
 import android.content.Context
 import android.util.Base64
+import android.util.Log
 import org.json.JSONArray
 import org.json.JSONObject
 import org.json.JSONTokener
@@ -159,3 +160,11 @@ fun String.findMACOrNull() = REGEX_MAC_ADDRESS.toRegex().find(this)?.value
  */
 const val REGEX_MAC_ADDRESS = "([\\da-fA-f]{2}[:-]){5}[\\da-fA-f]{2}"
 
+/**
+ * Logs the string as exception. A tag is automatically assigned if not provided.
+ * @receiver Exception
+ * @param tag String
+ */
+fun String.logError(tag: String = javaClass.simpleName) {
+    Log.e(tag, this)
+}

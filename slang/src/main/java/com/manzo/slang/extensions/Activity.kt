@@ -1,7 +1,6 @@
 package com.manzo.slang.extensions
 
 import android.app.Activity
-import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.support.v4.app.Fragment
@@ -103,18 +102,6 @@ fun Activity.shareText(text: String, title: String? = null, imageUri: Uri? = nul
 
 }
 
-/**
- *
- * @receiver Intent
- * @param context Context
- * @return Boolean
- */
-private fun Intent.start(context: Context): Boolean {
-    return resolveActivity(context.packageManager)?.let {
-        context.startActivity(this)
-        true
-    } ?: false
-}
 
 
 /**

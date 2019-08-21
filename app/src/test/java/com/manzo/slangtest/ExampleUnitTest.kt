@@ -1,4 +1,4 @@
-package com.manzo.slang
+package com.manzo.slangtest
 
 import org.junit.Assert.assertEquals
 import org.junit.Test
