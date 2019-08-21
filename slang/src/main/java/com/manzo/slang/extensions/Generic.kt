@@ -5,7 +5,7 @@ import android.content.Context
 import android.net.ConnectivityManager
 import android.net.wifi.WifiManager
 import android.os.Handler
-import android.support.annotation.RequiresPermission
+import androidx.annotation.RequiresPermission
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import java.io.File
@@ -58,7 +58,14 @@ inline fun <I, reified O> I.convert(): O {
     return Gson().fromJson(json, object : TypeToken<O>() {}.type)
 }
 
-fun <T> Gson.fromJsonToList(json: String, model: Class<T>): List<T> {
+/**
+ * Returns a list of the specified model class
+ * @receiver Gson
+ * @param json String
+ * @param model T
+ * @return List<T>
+ */
+fun <T> Gson.fromJsonToList(json: String, model: T): List<T> {
     return this.fromJson(json, object : TypeToken<List<T>>() {}.type)
 }
 

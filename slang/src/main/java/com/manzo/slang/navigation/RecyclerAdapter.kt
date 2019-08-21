@@ -1,14 +1,14 @@
 package com.manzo.slang.navigation
 
 import android.content.Context
-import android.support.annotation.LayoutRes
-import android.support.v7.widget.GridLayoutManager
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
 import android.util.SparseArray
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.LayoutRes
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 
 abstract class RecyclerAdapter<T>(dataset: MutableList<T> = mutableListOf()) :
     RecyclerView.Adapter<RecyclerAdapter<T>.ViewHolder>() {
