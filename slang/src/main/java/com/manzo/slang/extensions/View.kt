@@ -5,13 +5,6 @@ import android.content.Context
 import android.graphics.drawable.Drawable
 import android.graphics.drawable.VectorDrawable
 import android.os.Build
-import android.support.annotation.DrawableRes
-import android.support.annotation.LayoutRes
-import android.support.constraint.Group
-import android.support.design.widget.Snackbar
-import android.support.transition.AutoTransition
-import android.support.transition.Transition
-import android.support.transition.TransitionManager
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -19,8 +12,16 @@ import android.view.ViewGroup
 import android.view.ViewTreeObserver
 import android.view.inputmethod.InputMethodManager
 import android.widget.ImageView
+import androidx.annotation.DrawableRes
+import androidx.annotation.LayoutRes
+import androidx.annotation.RequiresApi
+import androidx.constraintlayout.widget.Group
+import androidx.transition.AutoTransition
+import androidx.transition.Transition
+import androidx.transition.TransitionManager
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
@@ -293,6 +294,7 @@ fun Group.setAllOnClickListener(typeClickListener: (view: View) -> Unit): Group 
 /**
  * Convenience function for global observer
  */
+@RequiresApi(Build.VERSION_CODES.JELLY_BEAN)
 fun View.onGlobalLayout(listener: () -> Unit) {
     viewTreeObserver.addOnGlobalLayoutListener(object : ViewTreeObserver.OnGlobalLayoutListener {
         override fun onGlobalLayout() {

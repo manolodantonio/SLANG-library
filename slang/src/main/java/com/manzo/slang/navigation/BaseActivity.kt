@@ -3,11 +3,12 @@ package com.manzo.slang.navigation
 import android.app.Activity
 import android.os.Build
 import android.os.Bundle
-import android.support.v4.app.FragmentManager.POP_BACK_STACK_INCLUSIVE
-import android.support.v7.app.ActionBarDrawerToggle
-import android.support.v7.app.AlertDialog
-import android.support.v7.app.AppCompatActivity
 import android.view.WindowManager
+import androidx.annotation.RequiresApi
+import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.FragmentManager.POP_BACK_STACK_INCLUSIVE
 import com.manzo.slang.extensions.closeKeyboard
 
 /**
@@ -26,6 +27,7 @@ abstract class BaseActivity : AppCompatActivity() {
         window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN)
     }
 
+    @RequiresApi(Build.VERSION_CODES.JELLY_BEAN)
     fun closeApplication(activity: Activity) {
         activity.run {
             AlertDialog.Builder(this)

@@ -7,6 +7,7 @@ import org.json.JSONArray
 import org.json.JSONObject
 import org.json.JSONTokener
 import java.io.UnsupportedEncodingException
+import java.util.*
 
 
 /**
@@ -101,7 +102,7 @@ fun String.writeToInternalFile(context: Context, filename: String) =
 fun String.capitalizeEveryFirstLetter(): String {
     var output = ""
 
-    for (word in this.toLowerCase().split(" ").toMutableList()) {
+    for (word in this.toLowerCase(Locale.getDefault()).split(" ").toMutableList()) {
         output += if (output == "") word.capitalize() else " " + word.capitalize()
     }
     return output

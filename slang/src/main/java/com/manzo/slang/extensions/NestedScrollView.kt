@@ -1,7 +1,7 @@
 package com.manzo.slang.extensions
 
-import android.support.v4.widget.NestedScrollView
 import android.view.View
+import androidx.core.widget.NestedScrollView
 
 /**
  * Created by Manolo D'Antonio on 19/07/2019
