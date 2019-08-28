@@ -263,6 +263,51 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/../CommissioningApp/gradle.properties">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../CommissioningApp/network_library/build.gradle">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../CommissioningApp/network_library/build/generated/ap_generated_sources/debug/out/com/accenture/networklibrary/glide/GlideOptions.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../CommissioningApp/network_library/build/generated/ap_generated_sources/debug/out/com/accenture/networklibrary/glide/GlideRequest.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../CommissioningApp/network_library/build/generated/ap_generated_sources/debug/out/com/accenture/networklibrary/glide/GlideRequests.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../CommissioningApp/network_library/build/generated/ap_generated_sources/debug/out/com/bumptech/glide/GeneratedAppGlideModuleImpl.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../CommissioningApp/network_library/src/main/java/com/accenture/networklibrary/controllers/AbstractController.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../CommissioningApp/network_library/src/main/java/com/accenture/networklibrary/glide/ImageLoader.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../CommissioningApp/network_library/src/main/java/com/accenture/networklibrary/parser/GsonParseHelper.java">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/../fca_uconnect_android/app/src/main/java/com/fcagroup/global/myuconnect/utils/AndroidUtils.kt">
           <value>
             <set />
@@ -299,6 +344,11 @@
           </value>
         </entry>
         <entry key="$PROJECT_DIR$/build.gradle">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/gradle.properties">
           <value>
             <set />
           </value>
