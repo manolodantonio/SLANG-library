@@ -47,7 +47,7 @@ abstract class BaseFragment : Fragment(), FragmentOnBackPressed {
     override fun onAttach(context: Context) {
         super.onAttach(context)
         fragmentManager?.run {
-            // fragments added via REPLACE and will not fire backstack changes fix
+            // fix for: fragments added via REPLACE will not fire backstack changes
             if (backStackEntryCount == 0 && positionInBackstack == -1) {
                 onFragmentResume()
             }

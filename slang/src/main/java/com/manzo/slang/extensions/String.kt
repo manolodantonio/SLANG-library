@@ -1,6 +1,9 @@
 package com.manzo.slang.extensions
 
 import android.content.Context
+import android.os.Build
+import android.text.Html
+import android.text.Spanned
 import android.util.Base64
 import android.util.Log
 import org.json.JSONArray
@@ -167,4 +170,18 @@ const val REGEX_MAC_ADDRESS = "([\\da-fA-f]{2}[:-]){5}[\\da-fA-f]{2}"
  */
 fun String.logError(tag: String = javaClass.simpleName) {
     Log.e(tag, this)
+}
+
+/**
+ * Returns displayable styled text from the provided HTML string
+ * @receiver String
+ * @return Spanned
+ */
+@SuppressWarnings("deprecation")
+fun String.toHtmlSpanned(): Spanned {
+    return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+        Html.fromHtml(this, Html.FROM_HTML_MODE_LEGACY)
+    } else {
+        Html.fromHtml(this)
+    }
 }

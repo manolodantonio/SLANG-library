@@ -68,3 +68,15 @@ fun File.findLine(query: String) =
  */
 fun File.findLineOrNull(query: String) =
     bufferedReader().readLines().firstOrNull { it.contains(query) }
+
+/**
+ * Returns content of the file as string
+ * @receiver File
+ * @param maxLines Int
+ * @return String
+ */
+fun File.read(maxLines: Int = 0): String {
+    return inputStream().text(maxLines)
+
+}
+

@@ -1,20 +1,20 @@
 package com.manzo.slangtest
 
-import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import com.manzo.slang.extensions.startActivity
+import com.manzo.slang.extensions.raw
+import com.manzo.slang.extensions.text
+import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        Intent(this, MainActivity::class.java).run {
-            resolveActivity(packageManager)?.run {
-                baseContext.startActivity<MainActivity>()
-            }
-        }
+        //////////
+
+
+        main_tv.text = raw(R.raw.hazards).text()
     }
 }
 

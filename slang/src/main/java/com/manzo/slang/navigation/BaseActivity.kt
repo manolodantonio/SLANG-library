@@ -3,6 +3,7 @@ package com.manzo.slang.navigation
 import android.app.Activity
 import android.os.Build
 import android.os.Bundle
+import android.support.annotation.RequiresApi
 import android.support.v4.app.FragmentManager.POP_BACK_STACK_INCLUSIVE
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AlertDialog
@@ -26,6 +27,7 @@ abstract class BaseActivity : AppCompatActivity() {
         window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN)
     }
 
+    @RequiresApi(Build.VERSION_CODES.JELLY_BEAN)
     fun closeApplication(activity: Activity) {
         activity.run {
             AlertDialog.Builder(this)

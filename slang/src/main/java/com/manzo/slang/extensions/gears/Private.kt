@@ -12,13 +12,18 @@ import com.manzo.slang.extensions.hasPermissions
 
 
 /**
- *
+ * Checks if permissions have been granted. If not, requests them.
+ * Results of request are delivered in onRequestPermissionsResult
  * @param fragmentOrActivity Any?
  * @param requestCode Int
  * @param permissions Array<out String>
  * @return Boolean
  */
-internal fun checkPermissions(fragmentOrActivity: Any?, requestCode: Int, vararg permissions: String): Boolean {
+internal fun checkPermissions(
+    fragmentOrActivity: Any,
+    requestCode: Int,
+    vararg permissions: String
+): Boolean {
     val context = when (fragmentOrActivity) {
         is Fragment -> fragmentOrActivity.context
         is Activity -> fragmentOrActivity

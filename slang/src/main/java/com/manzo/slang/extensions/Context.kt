@@ -7,6 +7,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.content.pm.PackageManager
+import android.content.res.Configuration
 import android.os.Build
 import android.preference.PreferenceManager
 import android.support.annotation.*
@@ -19,6 +20,7 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import java.io.File
+import java.io.InputStream
 
 
 var toastAvailable = true
@@ -101,6 +103,22 @@ fun Context.boolean(@BoolRes resource: Int): Boolean {
     return resources.getBoolean(resource)
 }
 
+/**
+ * Extension function for easier resource acquirement
+ */
+fun Context.raw(@RawRes resource: Int): InputStream {
+    return resources.openRawResource(resource)
+}
+
+/**
+ * Extension function for easier resource acquirement
+ */
+fun Context.asset(filename: String): InputStream {
+    return assets.open(filename)
+}
+
+
+
 
 /**
  * Check if fingerprint auth is available
@@ -125,7 +143,7 @@ fun Context.defaultPrefs(): SharedPreferences = PreferenceManager.getDefaultShar
 
 
 /**
- * Save app log to target file
+ * Saves app log to target internal file. Creates or overrides the file.
  * @receiver Activity
  * @param targetFile String
  * @return File
@@ -135,7 +153,7 @@ fun Context.saveLogsToFile(targetFile: String) =
 
 
 /**
- *
+ * Returns or creates file from the external cache dir
  * @receiver Context
  * @param filename String
  * @return File
@@ -192,3 +210,19 @@ inline fun <reified T : Activity> Context.startActivity() {
             startActivity(it)
         }
 }
+
+/**
+ * Checks if device is in landscape orientation
+ * @receiver Context
+ * @return Boolean
+ */
+fun Context.isLandscape() =
+    resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE
+
+/**
+ * Checks if device is in portrait orientation
+ * @receiver Context
+ * @return Boolean
+ */
+fun Context.isPortrait() =
+    resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT
