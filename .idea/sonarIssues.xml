@@ -338,6 +338,11 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/../EncounterGenerator/app/src/main/java/com/manzo/encountergenerator/MonsterSheet.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/../EncounterGenerator/app/src/main/java/com/manzo/encountergenerator/monstersLibrary/BaseMonstersPageFragment.kt">
           <value>
             <set />
@@ -349,6 +354,11 @@
           </value>
         </entry>
         <entry key="$PROJECT_DIR$/../EncounterGenerator/app/src/main/java/com/manzo/encountergenerator/newMonster/NewGeneralPageFragment.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../EncounterGenerator/app/src/main/java/com/manzo/encountergenerator/travelCalendar/EncounterActivity.kt">
           <value>
             <set />
           </value>

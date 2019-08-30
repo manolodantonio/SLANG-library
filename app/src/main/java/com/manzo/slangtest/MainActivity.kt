@@ -15,6 +15,7 @@ class MainActivity : AppCompatActivity() {
 
 
         main_tv.text = raw(R.raw.hazards).text()
+
     }
 }
 

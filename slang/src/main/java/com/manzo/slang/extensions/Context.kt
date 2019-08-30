@@ -3,7 +3,9 @@ package com.manzo.slang.extensions
 import android.Manifest
 import android.annotation.TargetApi
 import android.app.Activity
+import android.app.Application
 import android.content.Context
+import android.content.ContextWrapper
 import android.content.Intent
 import android.content.SharedPreferences
 import android.content.pm.PackageManager
@@ -11,10 +13,13 @@ import android.content.res.Configuration
 import android.os.Build
 import android.preference.PreferenceManager
 import android.support.annotation.*
+import android.support.v4.app.Fragment
 import android.support.v4.content.ContextCompat
 import android.support.v4.hardware.fingerprint.FingerprintManagerCompat
 import android.util.TypedValue
+import android.view.View
 import android.widget.Toast
+import com.manzo.slang.navigation.BaseFragment
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
@@ -199,17 +204,59 @@ inline fun <reified T : Activity> Context.startActivityNewTask() {
 }
 
 /**
- * Starts new activity. Adds FLAG_ACTIVITY_NEW_TASK when trying to start new activity from out of Activity context
+ * Digs through the hierarchy to find the base activity of a context.
+ *
+ * May return null.
+ * @receiver Context
+ * @return Activity?
+ */
+fun Context.getParentActivity(): Activity? {
+    var context = this
+    while (context is ContextWrapper) {
+        if (context is Activity) {
+            return context
+        }
+        context = context.baseContext
+    }
+    return null
+}
+
+/**
+ * Starts new activity.
+ *
+ * If context is not an Activity, tries to find parent activity. If a parent activity cannot be found, starts the target activity with FLAG_ACTIVITY_NEW_TASK
  * @receiver Context
  */
 inline fun <reified T : Activity> Context.startActivity() {
+    lateinit var startingContext: Context
     Intent(this, T::class.java)
         .apply {
-            if (this !is Activity) flags = Intent.FLAG_ACTIVITY_NEW_TASK
-        }.let {
-            startActivity(it)
+            startingContext = when (this) {
+                is View -> {
+                    context.getParentActivity() ?: run {
+                        flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                        this@startActivity
+                    }
+                }
+                is Fragment -> {
+                    if (this is BaseFragment) activity
+                    else activity ?: run {
+                        flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                        this@startActivity
+                    }
+                }
+                is Activity, is Application -> this@startActivity
+                else -> getParentActivity() ?: run {
+                    flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                    this@startActivity
+                }
+            }
         }
+        .start(startingContext)
 }
+
+
+
 
 /**
  * Checks if device is in landscape orientation
