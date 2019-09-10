@@ -34,9 +34,14 @@ inline fun <I, reified O> I.convert(): O = Gson().toJson(this).fromJson()
 /**
  * Converts object to json via GSON
  * @receiver T
+ * @param prettyPrint Boolean
  * @return String
  */
-fun <T> T.toJson(): String = Gson().toJson(this)
+fun <T> T.toJson(prettyPrint: Boolean = false): String =
+    Gson().toJson(this).run {
+        if (prettyPrint) jsonPrettyPrint() else this
+    }
+
 
 
 /**
@@ -55,22 +60,22 @@ inline fun <reified T> String.fromJson(): T =
  */
 inline fun <reified T> String.fromJson(model: Class<T>): T = Gson().fromJson(this, model)
 
-
-/**
- * Executes block only if receiver is not null.
- *
- * Example: myString ifNotNull { doMyStuff() }
- *
- * @receiver Any?
- * @param block Function0<Unit>
- */
-infix fun Any?.ifNotNull(block: () -> Unit) {
-    this?.let { block.invoke() }
-}
-
-/**
- * Short for [ifNotNull]
- * @receiver Any?
- * @param block Function0<Unit>
- */
-infix fun Any?.nn(block: () -> Unit) = this ifNotNull block
+//
+///**
+// * Executes block only if receiver is not null.
+// *
+// * Example: myString ifNotNull { doMyStuff() }
+// *
+// * @receiver Any?
+// * @param block Function0<Unit>
+// */
+//infix fun Any?.ifNotNull(block: () -> Unit) {
+//    this?.let { block.invoke() }
+//}
+//
+///**
+// * Short for [ifNotNull]
+// * @receiver Any?
+// * @param block Function0<Unit>
+// */
+//infix fun Any?.nn(block: () -> Unit) = this ifNotNull block

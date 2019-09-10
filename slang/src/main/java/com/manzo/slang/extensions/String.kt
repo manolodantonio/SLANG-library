@@ -10,7 +10,19 @@ import org.json.JSONArray
 import org.json.JSONObject
 import org.json.JSONTokener
 import java.io.UnsupportedEncodingException
+import java.util.*
 
+
+/**
+ * Elvis operator for blank strings
+ * Returns left(receiver) string if not blank, else runs right block
+ * @receiver String
+ * @param function Function0<String>
+ * @return String
+ */
+infix fun String.onBlank(function: () -> String): String {
+    return if (isNotBlank()) this else function.invoke()
+}
 
 /**
  * Replace all the targets with the provided replacement
@@ -101,12 +113,13 @@ fun String.writeToInternalFile(context: Context, filename: String) =
 /**
  * Extension method for String types for capitalizing first letter in every word
  */
-fun String.capitalizeEveryFirstLetter(): String {
+fun String.capitalizeWords(): String {
     var output = ""
 
-    for (word in this.toLowerCase().split(" ").toMutableList()) {
+    toLowerCase(Locale.getDefault()).split(" ").toMutableList().forEach { word ->
         output += if (output == "") word.capitalize() else " " + word.capitalize()
     }
+
     return output
 }
 
@@ -115,19 +128,16 @@ fun String.capitalizeEveryFirstLetter(): String {
  * Truncates the string to the specified length number of characters
  */
 fun String.truncateTo(len: Int): String {
-    return if (this.length > len) {
-        this.substring(len) + "…"
-    } else {
-        this
-    }
+    return if (length > len) substring(len) + "…"
+    else this
 }
 
 
 /**
- * Convert a string to Json and output pretty print
+ * Pretty prints a provided Json string. Throws exception if string is not correct Json.
  * @receiver String
  * @param indentSpaces Int
- * @return String?
+ * @return String
  */
 fun String.jsonPrettyPrint(indentSpaces: Int = 2): String {
     return try {

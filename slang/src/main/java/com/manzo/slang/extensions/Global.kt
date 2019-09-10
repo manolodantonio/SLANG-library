@@ -152,14 +152,14 @@ fun checkAddressReachable(address: String, port: Int = 22, scanTimeoutMillis: In
 }
 
 /**
- *
+ * Generates random hex String
  * @return String
  */
 fun generateRandomHex(): String =
     Integer.toHexString(Random().nextInt())
 
 /**
- *
+ * Returns current clock time.
  * @param printSeconds Boolean
  * @return String
  */
