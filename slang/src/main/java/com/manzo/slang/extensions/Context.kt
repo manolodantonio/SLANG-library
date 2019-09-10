@@ -110,6 +110,8 @@ fun Context.boolean(@BoolRes resource: Int): Boolean {
 
 /**
  * Extension function for easier resource acquirement
+ *
+ * Read as text with [InputStream.text]
  */
 fun Context.raw(@RawRes resource: Int): InputStream {
     return resources.openRawResource(resource)
@@ -117,6 +119,8 @@ fun Context.raw(@RawRes resource: Int): InputStream {
 
 /**
  * Extension function for easier resource acquirement
+ *
+ * Read as text with [InputStream.text]
  */
 fun Context.asset(filename: String): InputStream {
     return assets.open(filename)

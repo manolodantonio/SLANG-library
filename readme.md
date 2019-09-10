@@ -15,6 +15,6 @@ Step 2.
 Add the dependency
 
 	dependencies {
-	        implementation 'com.github.manolodantonio:SLANG-library:0.1.3'
+	        implementation 'com.github.manolodantonio:SLANG-library:0.1.6'
 	}
 
