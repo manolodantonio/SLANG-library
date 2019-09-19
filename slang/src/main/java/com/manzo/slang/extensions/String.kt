@@ -14,17 +14,6 @@ import java.util.*
 
 
 /**
- * Elvis operator for blank strings
- * Returns left(receiver) string if not blank, else runs right block
- * @receiver String
- * @param function Function0<String>
- * @return String
- */
-infix fun String.onBlank(function: () -> String): String {
-    return if (isNotBlank()) this else function.invoke()
-}
-
-/**
  * Replace all the targets with the provided replacement
  */
 fun String.replace(targets: List<String>, replacement: String, ignoreCase: Boolean = false): String {

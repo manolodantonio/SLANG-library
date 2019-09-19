@@ -7,6 +7,7 @@ import android.graphics.drawable.VectorDrawable
 import android.os.Build
 import android.support.annotation.DrawableRes
 import android.support.annotation.LayoutRes
+import android.support.annotation.RequiresApi
 import android.support.constraint.Group
 import android.support.design.widget.Snackbar
 import android.support.transition.AutoTransition
@@ -293,6 +294,7 @@ fun Group.setAllOnClickListener(typeClickListener: (view: View) -> Unit): Group 
 /**
  * Convenience function for global observer
  */
+@RequiresApi(Build.VERSION_CODES.JELLY_BEAN)
 fun View.onGlobalLayout(listener: () -> Unit) {
     viewTreeObserver.addOnGlobalLayoutListener(object : ViewTreeObserver.OnGlobalLayoutListener {
         override fun onGlobalLayout() {

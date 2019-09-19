@@ -42,7 +42,7 @@ fun <T> List<T>.asSafeMutable(): MutableList<T> {
 }
 
 /**
- * Replace with the provided newValue every object in the list that matches the conditionBlock
+ * Replaces with the provided newValue every object in the list that matches the conditionBlock
  * @receiver MutableList<T>
  * @param newValue T
  * @param conditionBlock Function1<[@kotlin.ParameterName] T, Boolean>
@@ -65,12 +65,12 @@ fun <T> MutableList<T>.removeFirst(conditionBlock: (listElement: T) -> Boolean):
 }
 
 /**
- * Remove all elements in the list that match the conditionBlock
+ * Removes from the list all the elements that match the conditionBlock
  *
  * @receiver MutableList<T>
  * @param conditionBlock Function1<T, Boolean>
  */
-fun <T> MutableList<T>.remove(conditionBlock: (listElement: T) -> Boolean) {
+fun <T> MutableList<T>.removeIf(conditionBlock: (listElement: T) -> Boolean) {
     forEach { if (conditionBlock(it)) remove(it) }
 }
 

@@ -3,7 +3,6 @@ package com.manzo.slang.extensions
 import android.app.Activity
 import android.content.Intent
 import android.net.Uri
-import android.support.v4.app.Fragment
 import com.manzo.slang.extensions.gears.checkPermissions
 
 /**
@@ -103,16 +102,6 @@ fun Activity.shareText(text: String, title: String? = null, imageUri: Uri? = nul
 }
 
 
-
-/**
- * Fragment extension for [checkPermissions]
- * @receiver Fragment
- * @param requestCode Int
- * @param permissions Array<out String>
- * @return Boolean
- */
-fun Fragment.checkPermissions(requestCode: Int, vararg permissions: String) =
-    checkPermissions(this, requestCode, *permissions)
 
 /**
  * Activity extension for [checkPermissions]

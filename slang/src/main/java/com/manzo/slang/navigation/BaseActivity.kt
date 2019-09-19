@@ -4,12 +4,12 @@ import android.app.Activity
 import android.os.Build
 import android.os.Bundle
 import android.support.annotation.RequiresApi
-import android.support.v4.app.FragmentManager.POP_BACK_STACK_INCLUSIVE
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import android.view.WindowManager
 import com.manzo.slang.extensions.closeKeyboard
+import com.manzo.slang.extensions.ifFalse
 
 /**
  * Created by Manolo D'Antonio
@@ -64,14 +64,18 @@ abstract class BaseActivity : AppCompatActivity() {
             supportFragmentManager
                 .beginTransaction()
                 .run {
-                    if (newStack)
-                        replace(containerResource, fragment, canonicalName)
-                    else {
-                        //                            setCustomAnimations(R.anim.slide_enter_right, R.anim.slide_exit_right,  R.anim.slide_enter_right, R.anim.slide_exit_right)
-                        addToBackStack(canonicalName)
-                        add(containerResource, fragment, canonicalName)
-                            .show(fragment)
-                    }
+                    //                    if (newStack)
+//                        replace(containerResource, fragment, canonicalName)
+//                    else {
+//                        //                            setCustomAnimations(R.anim.slide_enter_right, R.anim.slide_exit_right,  R.anim.slide_enter_right, R.anim.slide_exit_right)
+//                        addToBackStack(canonicalName)
+//                        add(containerResource, fragment, canonicalName)
+//                            .show(fragment)
+//                    }
+
+                    if (!newStack) addToBackStack(canonicalName)
+                    add(containerResource, fragment, canonicalName)
+                        .show(fragment)
                 }
                 .commit()
 
@@ -91,32 +95,40 @@ abstract class BaseActivity : AppCompatActivity() {
         }
     }
 
-    fun <T> navigateBackTo(targetFragment: Class<T>): Boolean {
-        return supportFragmentManager.run {
+    fun <T> navigateBackTo(targetFragment: Class<T>) {
+        supportFragmentManager.run {
             findFragmentByTag(targetFragment.simpleName)?.let {
                 popBackStackImmediate(targetFragment.simpleName, 0).run {
                     if (!this && fragments.size > 1) {
                         // if fail to pop
                         // fragment is in stack but no state: is fragment 0.
-                        fragments[1]?.let { first ->
-                            popBackStackImmediate(first.javaClass.simpleName, POP_BACK_STACK_INCLUSIVE)
+                        // fragments in backstack and status to pop are NOT the same thing.
+                        // we are not adding status for first fragment,
+                        // doing that will cause blank screen on back.
+                        // So, horrible solution for an horrible problem:
+                        repeat(fragments.size - 1) {
+                            popBackStack()
                         }
 
-                    } else this
+                    } else super.onBackPressed()
                 }
-            } ?: false
+            } ?: super.onBackPressed()
         }
     }
+
 
     override fun onBackPressed() {
-        supportFragmentManager.fragments.run {
-            if (isEmpty()) super.onBackPressed()
-            else (last() as BaseFragment)
-                .onFragmentBackPressed()
-                .takeIf { managed -> managed.not() }
-                ?.run { super.onBackPressed() }
+        supportFragmentManager.run {
+            when {
+                backStackEntryCount == 0 ->
+                    super.onBackPressed()
+                fragments.last() is BaseFragment ->
+                    (fragments.last() as BaseFragment).onFragmentBackPressed()
+                        .ifFalse { super.onBackPressed() }
+                else ->
+                    super.onBackPressed()
+            }
         }
     }
-
 }
 
