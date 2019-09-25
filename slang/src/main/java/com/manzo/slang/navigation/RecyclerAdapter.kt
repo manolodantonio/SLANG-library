@@ -20,9 +20,9 @@ abstract class RecyclerAdapter<T>(dataset: MutableList<T> = mutableListOf()) :
     var dataset = dataset
         set(value) {
             field.apply {
-                    clear()
-                    addAll(value)
-                }
+                clear()
+                addAll(value)
+            }
             notifyDataSetChanged()
         }
 
@@ -46,6 +46,16 @@ abstract class RecyclerAdapter<T>(dataset: MutableList<T> = mutableListOf()) :
         }
     }
 
+    fun replaceItem(position: Int, item: T): Boolean {
+        return if (dataset.size - 1 > position) false
+        else {
+            dataset[position] = item
+            notifyItemChanged(position)
+            true
+        }
+
+    }
+
 
     @get:LayoutRes
     protected abstract val rowLayout: Int
@@ -57,7 +67,13 @@ abstract class RecyclerAdapter<T>(dataset: MutableList<T> = mutableListOf()) :
 
     protected open fun onBindEmptyView(holder: ViewHolder, position: Int) {}
 
-    protected open fun onItemLayoutClick(viewHolder: ViewHolder, view: View, position: Int, elementData: T) {}
+    protected open fun onItemLayoutClick(
+        viewHolder: ViewHolder,
+        view: View,
+        position: Int,
+        elementData: T
+    ) {
+    }
 
     override fun getItemCount(): Int {
         return if (dataset.isEmpty() && emptyLayout != 0) 1 else dataset.size
@@ -65,7 +81,8 @@ abstract class RecyclerAdapter<T>(dataset: MutableList<T> = mutableListOf()) :
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(getLayoutRes(viewType), parent, false)
+        val view =
+            LayoutInflater.from(parent.context).inflate(getLayoutRes(viewType), parent, false)
         return ViewHolder(view)
     }
 
@@ -143,7 +160,11 @@ abstract class GenericViewHolder<T : View>(itemView: View) : RecyclerView.ViewHo
  * @param myAdapter RecyclerAdapter<T>
  * @param numberOfColumns Int
  */
-fun <T> RecyclerView.init(context: Context, myAdapter: RecyclerAdapter<T>, numberOfColumns: Int = 1) {
+fun <T> RecyclerView.init(
+    context: Context,
+    myAdapter: RecyclerAdapter<T>,
+    numberOfColumns: Int = 1
+) {
     apply {
         layoutManager =
             if (numberOfColumns <= 1) LinearLayoutManager(context)

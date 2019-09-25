@@ -60,17 +60,18 @@ fun <T> MutableList<T>.replace(newValue: T, conditionBlock: (listElement: T) -> 
  * @param conditionBlock Function1<T, Boolean>
  * @return True if condition is found and removal is successful.
  */
-fun <T> MutableList<T>.removeFirst(conditionBlock: (listElement: T) -> Boolean): Boolean {
+fun <T> MutableCollection<T>.removeFirst(conditionBlock: (listElement: T) -> Boolean): Boolean {
     return find { conditionBlock.invoke(it) }?.let { remove(it) } ?: false
 }
 
 /**
  * Removes from the list all the elements that match the conditionBlock
+ * Pre api24 compatible
  *
  * @receiver MutableList<T>
  * @param conditionBlock Function1<T, Boolean>
  */
-fun <T> MutableList<T>.removeIf(conditionBlock: (listElement: T) -> Boolean) {
+fun <T> MutableCollection<T>.remove(conditionBlock: (listElement: T) -> Boolean) {
     forEach { if (conditionBlock(it)) remove(it) }
 }
 

@@ -15,6 +15,7 @@ import android.preference.PreferenceManager
 import android.support.annotation.*
 import android.support.v4.app.Fragment
 import android.support.v4.content.ContextCompat
+import android.support.v4.content.LocalBroadcastManager
 import android.support.v4.hardware.fingerprint.FingerprintManagerCompat
 import android.util.TypedValue
 import android.view.View
@@ -277,3 +278,22 @@ fun Context.isLandscape() =
  */
 fun Context.isPortrait() =
     resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT
+
+
+/**
+ * Broadcasts an intent locally. Data is added to extras as strings.
+ * @receiver Context
+ * @param intentFilter String
+ * @param data Map<String, String>
+ */
+fun Context.sendLocalBroadcast(intentFilter: String, data: Map<String, String>) {
+    Intent(intentFilter)
+        .apply {
+            data.forEach { entry ->
+                putExtra(entry.key, entry.value)
+            }
+        }
+        .let {
+            LocalBroadcastManager.getInstance(this).sendBroadcast(it)
+        }
+}

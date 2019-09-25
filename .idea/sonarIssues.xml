@@ -263,6 +263,21 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/../CommissioningApp/app/src/main/res/layout/dialog_logs_help.xml">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../CommissioningApp/app/src/main/res/layout/fragment_device_details.xml">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../CommissioningApp/app/src/main/res/layout/fragment_gateway_details.xml">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/../CommissioningApp/app/src/main/res/layout/fragment_login.xml">
           <value>
             <set />
@@ -274,6 +289,11 @@
           </value>
         </entry>
         <entry key="$PROJECT_DIR$/../CommissioningApp/app/src/main/res/layout/fragment_user_settings.xml">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../CommissioningApp/app/src/main/res/layout/fragment_wizard_connect.xml">
           <value>
             <set />
           </value>
@@ -363,6 +383,11 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/../CommissioningApp/sonar-project.properties">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/../ConsulTest/app/build.gradle">
           <value>
             <set />
@@ -379,6 +404,16 @@
           </value>
         </entry>
         <entry key="$PROJECT_DIR$/../ConsulTest/build.gradle">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../DiceRollerFloating/app/build.gradle">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../DiceRollerFloating/build.gradle">
           <value>
             <set />
           </value>

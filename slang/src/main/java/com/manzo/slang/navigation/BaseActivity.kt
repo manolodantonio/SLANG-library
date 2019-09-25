@@ -1,9 +1,14 @@
 package com.manzo.slang.navigation
 
 import android.app.Activity
+import android.content.BroadcastReceiver
+import android.content.Context
+import android.content.Intent
+import android.content.IntentFilter
 import android.os.Build
 import android.os.Bundle
 import android.support.annotation.RequiresApi
+import android.support.v4.content.LocalBroadcastManager
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
@@ -26,6 +31,38 @@ abstract class BaseActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN)
     }
+
+
+    protected open val localBroadcastIntentFilter: String? = null
+    private val localBroadcastReceiver by lazy {
+        object : BroadcastReceiver() {
+            override fun onReceive(p0: Context?, intent: Intent?) {
+                onLocalBroadcastReceive(intent)
+            }
+        }
+    }
+
+    open fun onLocalBroadcastReceive(intent: Intent?) {}
+
+
+    override fun onResume() {
+        super.onResume()
+        //
+        localBroadcastIntentFilter?.let {
+            LocalBroadcastManager.getInstance(this)
+                .registerReceiver(localBroadcastReceiver, IntentFilter(it))
+        }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        //
+        localBroadcastIntentFilter?.let {
+            LocalBroadcastManager.getInstance(this)
+                .unregisterReceiver(localBroadcastReceiver)
+        }
+    }
+
 
     @RequiresApi(Build.VERSION_CODES.JELLY_BEAN)
     fun closeApplication(activity: Activity) {
