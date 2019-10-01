@@ -286,10 +286,10 @@ fun Context.isPortrait() =
  * @param intentFilter String
  * @param data Map<String, String>
  */
-fun Context.sendLocalBroadcast(intentFilter: String, data: Map<String, String>) {
+fun Context.sendLocalBroadcast(intentFilter: String, data: Map<String, String>? = null) {
     Intent(intentFilter)
         .apply {
-            data.forEach { entry ->
+            data?.forEach { entry ->
                 putExtra(entry.key, entry.value)
             }
         }

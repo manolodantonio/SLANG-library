@@ -8,7 +8,7 @@ import android.widget.EditText
  */
 
 /**
- * Set max length keeping all previous filters, replacing previous max length
+ * Set max characters keeping all previous filters, replacing previous max length
  * @receiver EditText
  * @param length Int
  */

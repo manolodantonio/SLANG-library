@@ -78,7 +78,17 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/../CommissioningApp/app/src/main/java/com/accenture/edge/next/commissioningapp/data/network/controllers/GetLocalDevicesAddressesController.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/../CommissioningApp/app/src/main/java/com/accenture/edge/next/commissioningapp/data/network/controllers/LoginController.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../CommissioningApp/app/src/main/java/com/accenture/edge/next/commissioningapp/data/network/controllers/UpdateDeviceStatusListController.kt">
           <value>
             <set />
           </value>
@@ -474,6 +484,11 @@
           </value>
         </entry>
         <entry key="$PROJECT_DIR$/../EncounterGenerator/app/src/main/java/com/manzo/encountergenerator/travelCalendar/TravelSeedAdapter.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../EncounterGenerator/app/src/main/java/com/manzo/encountergenerator/travelCalendar/TravelViewModel.kt">
           <value>
             <set />
           </value>

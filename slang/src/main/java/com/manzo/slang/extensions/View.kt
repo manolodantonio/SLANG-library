@@ -2,8 +2,10 @@ package com.manzo.slang.extensions
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
 import android.graphics.drawable.VectorDrawable
+import android.net.Uri
 import android.os.Build
 import android.support.annotation.DrawableRes
 import android.support.annotation.LayoutRes
@@ -26,6 +28,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import java.io.File
 
 /**
  * Hide softKeyboard
@@ -269,6 +272,10 @@ fun ImageView.image(
         is Int -> with.load(parameter)
         is String -> with.load(parameter)
         is Drawable -> with.load(parameter)
+        is Uri -> with.load(parameter)
+        is File -> with.load(parameter)
+        is ByteArray -> with.load(parameter)
+        is Bitmap -> with.load(parameter)
         else -> with.load(errorPlaceHolder)
     }
     requestBuilder.apply(requestOptions).into(this)
