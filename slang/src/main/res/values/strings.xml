@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Slang</string>
+    <string name="this_list_is_empty">This list is empty.</string>
 </resources>

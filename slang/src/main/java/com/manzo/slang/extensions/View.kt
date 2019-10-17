@@ -256,7 +256,7 @@ fun ImageView.image(
         requestOptions.placeholder(it)
     }
     errorPlaceHolder?.let {
-        requestOptions.error(it).fallback(it)
+        requestOptions.error(it)
     }
 
     fitStyle.apply {

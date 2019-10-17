@@ -9,6 +9,7 @@ import android.util.SparseArray
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.manzo.slang.R
 
 abstract class RecyclerAdapter<T>(dataset: MutableList<T> = mutableListOf()) :
     RecyclerView.Adapter<RecyclerAdapter<T>.ViewHolder>() {
@@ -63,7 +64,7 @@ abstract class RecyclerAdapter<T>(dataset: MutableList<T> = mutableListOf()) :
     protected abstract fun onBindContentView(holder: ViewHolder, position: Int, elementData: T)
 
     @LayoutRes
-    protected open val emptyLayout: Int = 0
+    protected open val emptyLayout: Int = R.layout.row_base_empty
 
     protected open fun onBindEmptyView(holder: ViewHolder, position: Int) {}
 

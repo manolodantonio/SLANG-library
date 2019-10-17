@@ -138,6 +138,11 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/../CommissioningApp/app/src/main/java/com/accenture/edge/next/commissioningapp/ui/adapters/RemoteDetailAdapter.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/../CommissioningApp/app/src/main/java/com/accenture/edge/next/commissioningapp/ui/adapters/SettingsMenuAdapter.kt">
           <value>
             <set />
@@ -169,6 +174,11 @@
           </value>
         </entry>
         <entry key="$PROJECT_DIR$/../CommissioningApp/app/src/main/java/com/accenture/edge/next/commissioningapp/ui/viewModel/GatewayViewModel.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../CommissioningApp/app/src/main/java/com/accenture/edge/next/commissioningapp/ui/viewModel/RemoteDetailViewModel.kt">
           <value>
             <set />
           </value>
@@ -314,6 +324,11 @@
           </value>
         </entry>
         <entry key="$PROJECT_DIR$/../CommissioningApp/app/src/main/res/layout/row_gateway.xml">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../CommissioningApp/app/src/main/res/layout/row_remote_gateway.xml">
           <value>
             <set />
           </value>
@@ -464,6 +479,11 @@
           </value>
         </entry>
         <entry key="$PROJECT_DIR$/../EncounterGenerator/app/src/main/java/com/manzo/encountergenerator/newMonster/NewGeneralPageFragment.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../EncounterGenerator/app/src/main/java/com/manzo/encountergenerator/travelCalendar/CalendarViewModel.kt">
           <value>
             <set />
           </value>
@@ -784,6 +804,11 @@
           </value>
         </entry>
         <entry key="$PROJECT_DIR$/slang/src/main/java/com/manzo/slang/network/BaseController.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/slang/src/main/res/layout/row_base_empty.xml">
           <value>
             <set />
           </value>
