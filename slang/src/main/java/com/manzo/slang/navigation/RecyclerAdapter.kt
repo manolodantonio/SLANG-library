@@ -1,6 +1,5 @@
 package com.manzo.slang.navigation
 
-import android.content.Context
 import android.support.annotation.LayoutRes
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.LinearLayoutManager
@@ -162,7 +161,6 @@ abstract class GenericViewHolder<T : View>(itemView: View) : RecyclerView.ViewHo
  * @param numberOfColumns Int
  */
 fun <T> RecyclerView.init(
-    context: Context,
     myAdapter: RecyclerAdapter<T>,
     numberOfColumns: Int = 1
 ) {

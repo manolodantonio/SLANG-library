@@ -78,12 +78,22 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/../CommissioningApp/app/src/main/java/com/accenture/edge/next/commissioningapp/data/network/controllers/GetDeviceSensors.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/../CommissioningApp/app/src/main/java/com/accenture/edge/next/commissioningapp/data/network/controllers/GetLocalDevicesAddressesController.kt">
           <value>
             <set />
           </value>
         </entry>
         <entry key="$PROJECT_DIR$/../CommissioningApp/app/src/main/java/com/accenture/edge/next/commissioningapp/data/network/controllers/LoginController.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../CommissioningApp/app/src/main/java/com/accenture/edge/next/commissioningapp/data/network/controllers/PutGenericController.kt">
           <value>
             <set />
           </value>
@@ -104,6 +114,11 @@
           </value>
         </entry>
         <entry key="$PROJECT_DIR$/../CommissioningApp/app/src/main/java/com/accenture/edge/next/commissioningapp/logic/ShellUtils.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../CommissioningApp/app/src/main/java/com/accenture/edge/next/commissioningapp/logic/Tomove.kt">
           <value>
             <set />
           </value>
@@ -134,6 +149,11 @@
           </value>
         </entry>
         <entry key="$PROJECT_DIR$/../CommissioningApp/app/src/main/java/com/accenture/edge/next/commissioningapp/ui/adapters/GatewaysAdapter.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../CommissioningApp/app/src/main/java/com/accenture/edge/next/commissioningapp/ui/adapters/LocalDetailAdapter.kt">
           <value>
             <set />
           </value>
@@ -174,6 +194,11 @@
           </value>
         </entry>
         <entry key="$PROJECT_DIR$/../CommissioningApp/app/src/main/java/com/accenture/edge/next/commissioningapp/ui/viewModel/GatewayViewModel.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../CommissioningApp/app/src/main/java/com/accenture/edge/next/commissioningapp/ui/viewModel/LocalDetailViewModel.kt">
           <value>
             <set />
           </value>
@@ -239,6 +264,11 @@
           </value>
         </entry>
         <entry key="$PROJECT_DIR$/../CommissioningApp/app/src/main/java/com/accenture/edge/next/commissioningapp/ui/views/fragments/GatewaysFragment.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../CommissioningApp/app/src/main/java/com/accenture/edge/next/commissioningapp/ui/views/fragments/LocalDetailFragment.kt">
           <value>
             <set />
           </value>

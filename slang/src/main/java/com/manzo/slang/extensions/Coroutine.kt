@@ -89,7 +89,7 @@ suspend fun <T> awaitResponse(block: ((T) -> Unit) -> Unit): T =
  * @param block Function0<T>
  * @return last line as a Deferred. [await] can be appended to retrieve an async result.
  */
-fun <T> async(block: () -> T): Deferred<T> {
+fun <T> defer(block: () -> T): Deferred<T> {
     return GlobalScope.async {
         block.invoke()
     }
