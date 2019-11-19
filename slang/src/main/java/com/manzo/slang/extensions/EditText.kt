@@ -5,6 +5,7 @@ import android.os.Handler
 import android.text.Editable
 import android.text.InputFilter
 import android.text.TextWatcher
+import android.view.View
 import android.widget.EditText
 
 /**
@@ -12,7 +13,7 @@ import android.widget.EditText
  */
 
 /**
- * Set max characters keeping all previous filters, replacing previous max length
+ * Set max characters keeping all previous InputFilters, only replacing previous max length
  * @receiver EditText
  * @param length Int
  */
@@ -26,16 +27,21 @@ fun EditText.setMaxLength(length: Int) {
 /**
  * Will format the text while being inserted, adding [separator] every [interval] of characters
  *
- * Add other focus listeners BEFORE invoking this!
+ * This sets a focusChangeListener. If you also need one, use the [onFocusChange] interface instead
+ * of setting another listener, otherwise this function will stop working.
  * @receiver EditText
  * @param interval Int
  * @param separator String
+ * @param onFocusChange ((view: View, hasFocus: Boolean) -> Unit)?
  */
-fun EditText.setTextSeparator(interval: Int, separator: String) {
-    val oldFocusListener = onFocusChangeListener
+fun EditText.setTextSeparator(
+    interval: Int,
+    separator: String,
+    onFocusChange: ((view: View, hasFocus: Boolean) -> Unit)? = null
+) {
 
-    setOnFocusChangeListener { view, hasFocus ->
-        oldFocusListener?.onFocusChange(view, hasFocus)
+    onFocusChangeListener = View.OnFocusChangeListener { view, hasFocus ->
+        onFocusChange?.invoke(view, hasFocus)
 
         var watcher: TextWatcher? = null
         if (hasFocus) {
@@ -98,8 +104,8 @@ fun EditText.setTextSeparator(interval: Int, separator: String) {
             addTextChangedListener(watcher)
         } else removeTextChangedListener(watcher)
     }
-
 }
+
 
 /**
  * Alternative constructor for [setValidations]
@@ -114,7 +120,7 @@ fun EditText.setValidation(
     error: String,
     interval: Long = 1200,
     validationCompletedListener: ((isComplete: Boolean, failedValidation: Pair<Regex, String>?) -> Unit)? = null
-) = this.setValidations(listOf(Pair(regex, error)), interval, validationCompletedListener)
+) = setValidations(listOf(Pair(regex, error)), interval, validationCompletedListener)
 
 
 /**

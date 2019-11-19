@@ -12,6 +12,10 @@ import org.json.JSONTokener
 import java.io.UnsupportedEncodingException
 import java.util.*
 
+/**
+ * Used in [String.findMAC]
+ */
+const val REGEX_MAC_ADDRESS = "([\\da-fA-f]{2}[:-]){5}[\\da-fA-f]{2}"
 
 /**
  * Replace all the targets with the provided replacement
@@ -157,17 +161,12 @@ fun String.findMAC() = REGEX_MAC_ADDRESS.toRegex().find(this)?.value ?: ""
  */
 fun String.findMACOrNull() = REGEX_MAC_ADDRESS.toRegex().find(this)?.value
 
-/**
- * Used in [String.findMAC]
- */
-const val REGEX_MAC_ADDRESS = "([\\da-fA-f]{2}[:-]){5}[\\da-fA-f]{2}"
 
 /**
- * Logs the string as exception. A tag is automatically assigned if not provided.
+ * Logs the string as exception.
  * @receiver Exception
- * @param tag String
  */
-fun String.logError(tag: String = javaClass.simpleName) {
+fun String.logError(tag: String = "") {
     Log.e(tag, this)
 }
 

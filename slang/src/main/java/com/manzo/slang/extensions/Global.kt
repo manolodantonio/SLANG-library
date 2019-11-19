@@ -169,7 +169,7 @@ fun getTime(printSeconds: Boolean = false): String {
         val minute = get(Calendar.MINUTE)
 
         return "$hour:$minute".let {
-            if (printSeconds) it.plus(":${get(Calendar.SECOND)}")
+            if (printSeconds) "$it:${get(Calendar.SECOND)}"
             else it
         }
     }

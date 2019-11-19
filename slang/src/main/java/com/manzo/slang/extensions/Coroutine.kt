@@ -1,6 +1,6 @@
 package com.manzo.slang.extensions
 
-import kotlinx.coroutines.*
+import kotlinx.coroutines.suspendCancellableCoroutine
 import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
 
@@ -29,7 +29,7 @@ interface Callback<T> {
  *
  * Example:
  *
- * GlobalScope.launch(Dispatchers.IO) {
+ * coroutineScope.launch(Dispatchers.IO) {
  *
  *    val firstPromise = async { awaitCallback<List<FirstResult>> { firstOperation(input, it) } }
  *    val secondPromise = async { awaitCallback<List<SecondResult>> { secondOperation(input, context, true, it) } }
@@ -69,145 +69,145 @@ suspend fun <T> awaitResponse(block: ((T) -> Unit) -> Unit): T =
         })
     }
 
-
-/**
- *
- * Creates new coroutine and returns its future result as a Deferred.
- *
- * Chain with [await] or [awaitNet]
- *
- * Example:
- * ```
- * async {
- *  longOperation()
- * } await { result ->
- *  updateUi(result)
- * }
- *
- * ```
- *
- * @param block Function0<T>
- * @return last line as a Deferred. [await] can be appended to retrieve an async result.
- */
-fun <T> defer(block: () -> T): Deferred<T> {
-    return GlobalScope.async {
-        block.invoke()
-    }
-}
-
-
-/**
- * Awaits in a background thread and sends the result in the main thread.
- * This is an appropriate choice for compute-intensive operations that consume CPU resources.
- *
- * For blocking IO operations (Network, File..), use [awaitNet]
- *
- *
- * Example:
- * ```
- * async {
- *  longOperation()
- * } await { result ->
- *  updateUi(result)
- * }
- *
- * ```
- * @receiver Deferred<T>
- * @param result Function1<[@kotlin.ParameterName] T, Unit>
- */
-infix fun <T> Deferred<T>.await(result: (result: T) -> Unit) {
-    GlobalScope.launch {
-        val value = await()
-        launch(Dispatchers.Main) {
-            result.invoke(value)
-        }
-    }
-}
-
-
-/**
- * Awaits in a background thread and sends the result in the main thread.
- * Designed for IO-intensive blocking operations (like file I/O and blocking socket I/O).
- *
- * For compute-intensive operations use [await]
- *
- *
- * Example:
- * ```
- * async {
- *  longOperation()
- * } await { result ->
- *  updateUi(result)
- * }
- *
- * ```
- * @receiver Deferred<T>
- * @param result Function1<[@kotlin.ParameterName] T, Unit>
- */
-infix fun <T> Deferred<T>.awaitNet(result: (result: T) -> Unit) {
-    GlobalScope.launch(Dispatchers.IO) {
-        val value = await()
-        launch(Dispatchers.Main) {
-            result.invoke(value)
-        }
-    }
-}
-
-
-/**
- * Awaits in a background thread and sends the result in the main thread.
- * This is an appropriate choice for compute-intensive operations that consume CPU resources.
- *
- * For blocking IO operations (Network, File..), use [(() -> T).awaitNet]
- *
- *
- * Example:
- * ```
- * // we have a fun longOperation()
- * ::longOperation.await { result ->
- *  updateUi(result)
- * }
- *
- * ```
- * @receiver Deferred<T>
- * @param result Function1<[@kotlin.ParameterName] T, Unit>
- */
-infix fun <T> (() -> T).await(result: (result: T) -> Unit) {
-    GlobalScope.launch {
-        val value = invoke()
-        launch(Dispatchers.Main) {
-            result.invoke(value)
-        }
-    }
-}
-
-
-/**
- * Awaits in a background thread and sends the result in the main thread.
- * Designed for IO-intensive blocking operations (like file I/O and blocking socket I/O).
- *
- * For compute-intensive operations use [(() -> T).await]
- *
- *
- * Example:
- * ```
- * // we have a fun longOperation()
- * ::longOperation.awaitNet { result ->
- *  updateUi(result)
- * }
- *
- * ```
- * @receiver Deferred<T>
- * @param result Function1<[@kotlin.ParameterName] T, Unit>
- */
-infix fun <T> (() -> T).awaitNet(result: (result: T) -> Unit) {
-    GlobalScope.launch(Dispatchers.IO) {
-        val value = invoke()
-        launch(Dispatchers.Main) {
-            result.invoke(value)
-        }
-    }
-
-}
+//
+///**
+// *
+// * Creates new coroutine and returns its future result as a Deferred.
+// *
+// * Chain with [await] or [awaitNet]
+// *
+// * Example:
+// * ```
+// * defer {
+// *  longOperation()
+// * } await { result ->
+// *  updateUi(result)
+// * }
+// *
+// * ```
+// *
+// * @param block Function0<T>
+// * @return last line as a Deferred. [await] can be appended to retrieve an async result.
+// */
+//fun <T> defer(block: () -> T): Deferred<T> {
+//    return GlobalScope.async {
+//        block.invoke()
+//    }
+//}
+//
+//
+///**
+// * Awaits in a background thread and sends the result in the main thread.
+// * This is an appropriate choice for compute-intensive operations that consume CPU resources.
+// *
+// * For blocking IO operations (Network, File..), use [awaitNet]
+// *
+// *
+// * Example:
+// * ```
+// * defer {
+// *  longOperation()
+// * } await { result ->
+// *  updateUi(result)
+// * }
+// *
+// * ```
+// * @receiver Deferred<T>
+// * @param result Function1<[@kotlin.ParameterName] T, Unit>
+// */
+//infix fun <T> Deferred<T>.await(result: (result: T) -> Unit) {
+//    GlobalScope.launch {
+//        val value = await()
+//        launch(Dispatchers.Main) {
+//            result.invoke(value)
+//        }
+//    }
+//}
+//
+//
+///**
+// * Awaits in a background thread and sends the result in the main thread.
+// * Designed for IO-intensive blocking operations (like file I/O and blocking socket I/O).
+// *
+// * For compute-intensive operations use [await]
+// *
+// *
+// * Example:
+// * ```
+// * defer {
+// *  longOperation()
+// * } await { result ->
+// *  updateUi(result)
+// * }
+// *
+// * ```
+// * @receiver Deferred<T>
+// * @param result Function1<[@kotlin.ParameterName] T, Unit>
+// */
+//infix fun <T> Deferred<T>.awaitNet(result: (result: T) -> Unit) {
+//    GlobalScope.launch(Dispatchers.IO) {
+//        val value = await()
+//        launch(Dispatchers.Main) {
+//            result.invoke(value)
+//        }
+//    }
+//}
+//
+//
+///**
+// * Awaits in a background thread and sends the result in the main thread.
+// * This is an appropriate choice for compute-intensive operations that consume CPU resources.
+// *
+// * For blocking IO operations (Network, File..), use [(() -> T).awaitNet]
+// *
+// *
+// * Example:
+// * ```
+// * // we have a fun longOperation()
+// * ::longOperation.await { result ->
+// *  updateUi(result)
+// * }
+// *
+// * ```
+// * @receiver Deferred<T>
+// * @param result Function1<[@kotlin.ParameterName] T, Unit>
+// */
+//infix fun <T> (() -> T).await(result: (result: T) -> Unit) {
+//    GlobalScope.launch {
+//        val value = invoke()
+//        launch(Dispatchers.Main) {
+//            result.invoke(value)
+//        }
+//    }
+//}
+//
+//
+///**
+// * Awaits in a background thread and sends the result in the main thread.
+// * Designed for IO-intensive blocking operations (like file I/O and blocking socket I/O).
+// *
+// * For compute-intensive operations use [(() -> T).await]
+// *
+// *
+// * Example:
+// * ```
+// * // we have a fun longOperation()
+// * ::longOperation.awaitNet { result ->
+// *  updateUi(result)
+// * }
+// *
+// * ```
+// * @receiver Deferred<T>
+// * @param result Function1<[@kotlin.ParameterName] T, Unit>
+// */
+//infix fun <T> (() -> T).awaitNet(result: (result: T) -> Unit) {
+//    GlobalScope.launch(Dispatchers.IO) {
+//        val value = invoke()
+//        launch(Dispatchers.Main) {
+//            result.invoke(value)
+//        }
+//    }
+//
+//}
 
 

@@ -3,6 +3,8 @@ package com.manzo.slang.extensions
 import android.app.Activity
 import android.content.Intent
 import android.net.Uri
+import android.os.Build
+import android.support.annotation.RequiresApi
 import com.manzo.slang.extensions.gears.checkPermissions
 
 /**
@@ -10,14 +12,26 @@ import com.manzo.slang.extensions.gears.checkPermissions
  */
 
 /**
- * Hide softKeyboard
+ * Hide softKeyboard. Needs [Activity.getCurrentFocus] to not be null.
  * @receiver Activity
  */
 fun Activity.closeKeyboard() = currentFocus?.closeKeyboard()
-
+    ?: "Cannot find currentFocus".logError("closeKeyboard")
 
 /**
- *
+ * Closes the application
+ */
+@RequiresApi(Build.VERSION_CODES.JELLY_BEAN)
+fun Activity.closeApplication() {
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+        finishAndRemoveTask()
+    } else {
+        finishAffinity()
+    }
+}
+
+/**
+ * Starts email composer with default email
  * @receiver Activity
  * @param recipients Array<String>?
  * @param subject String?
@@ -43,13 +57,12 @@ fun Activity.sendEmail(
             recipients?.let { putExtra(Intent.EXTRA_EMAIL, it) }
             subject?.let { putExtra(Intent.EXTRA_SUBJECT, it) }
             message?.let { putExtra(Intent.EXTRA_TEXT, it) }
-
         }
         .start(this)
 }
 
 /**
- *
+ * Starts default phone call composer
  * @receiver Activity
  * @param phone String
  * @return Boolean
@@ -64,12 +77,12 @@ fun Activity.dialPhoneNumber(phone: String): Boolean {
 
 
 /**
- *
+ * Opens google maps and navigates to the provided street address
  * @receiver Activity
  * @param address String
  * @return Boolean
  */
-fun Activity.navigateToAddress(address: String): Boolean {
+fun Activity.navigateToStreetAddress(address: String): Boolean {
     val gmmIntentUri = Uri.parse("google.navigation:q=" + address.replace(" ", "+"))
     return Intent(Intent.ACTION_VIEW, gmmIntentUri)
         .apply { setPackage("com.google.android.apps.maps") }
@@ -77,7 +90,7 @@ fun Activity.navigateToAddress(address: String): Boolean {
 }
 
 /**
- *
+ * Opens share options for plain text and optional image
  * @receiver Activity
  * @param text String
  * @param title String?

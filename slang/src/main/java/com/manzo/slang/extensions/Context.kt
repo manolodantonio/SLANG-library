@@ -43,7 +43,11 @@ fun Context.toast(message: String, isLongDuration: Boolean = false, blockToastsT
     if (toastAvailable) {
         if (blockToastsTimer > 0) toastAvailable = false
         GlobalScope.launch(Dispatchers.Main) {
-            Toast.makeText(this@toast, message, if (isLongDuration) Toast.LENGTH_LONG else Toast.LENGTH_SHORT).show()
+            Toast.makeText(
+                this@toast,
+                message,
+                if (isLongDuration) Toast.LENGTH_LONG else Toast.LENGTH_SHORT
+            ).show()
             if (blockToastsTimer > 0) {
                 launch {
                     delay(blockToastsTimer)
@@ -53,7 +57,6 @@ fun Context.toast(message: String, isLongDuration: Boolean = false, blockToastsT
         }
     }
 }
-
 
 
 /**
@@ -128,8 +131,6 @@ fun Context.asset(filename: String): InputStream {
 }
 
 
-
-
 /**
  * Check if fingerprint auth is available
  */
@@ -168,7 +169,8 @@ fun Context.saveLogsToFile(targetFile: String) =
  * @param filename String
  * @return File
  */
-fun Context.getInternalFile(filename: String) = File(externalCacheDir, filename).apply { createNewFile() }
+fun Context.getInternalFile(filename: String) =
+    File(externalCacheDir, filename).apply { createNewFile() }
 
 /**
  * Checks if user has granted permissions. ie: Manifest.permission.ACCESS_FINE_LOCATION
@@ -178,7 +180,11 @@ fun Context.getInternalFile(filename: String) = File(externalCacheDir, filename)
  */
 fun Context.hasPermissions(vararg permissions: String): Boolean {
     for (arg in permissions) {
-        if (ContextCompat.checkSelfPermission(this, arg) == PackageManager.PERMISSION_DENIED) return false
+        if (ContextCompat.checkSelfPermission(
+                this,
+                arg
+            ) == PackageManager.PERMISSION_DENIED
+        ) return false
     }
 
     return true
@@ -261,8 +267,6 @@ inline fun <reified T : Activity> Context.startActivity() {
 }
 
 
-
-
 /**
  * Checks if device is in landscape orientation
  * @receiver Context
@@ -296,4 +300,14 @@ fun Context.sendLocalBroadcast(intentFilter: String, data: Map<String, String>? 
         .let {
             LocalBroadcastManager.getInstance(this).sendBroadcast(it)
         }
+}
+
+
+/**
+ * Convenience function for broadcasting an intent locally.
+ * @receiver Context
+ * @param intent Intent
+ */
+fun Context.sendLocalBroadcast(intent: Intent) {
+    LocalBroadcastManager.getInstance(this).sendBroadcast(intent)
 }
