@@ -24,80 +24,90 @@ abstract class BaseActivity : AppCompatActivity() {
     var isHamburgerIcon = true
     var drawerToggle: ActionBarDrawerToggle? = null
 
-    protected abstract fun getFragmentContainer(): Int?
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN)
-    }
+    ///////////// region Base Broadcast Receiver
 
-
-    private val localBroadcast by lazy {
-        LocalBroadcastManager.getInstance(this)
+    private val localBroadcastManager by lazy {
+        baseBroadcastIntentFilter?.let { LocalBroadcastManager.getInstance(this) }
     }
 
     private val localBroadcastReceiver by lazy {
         object : BroadcastReceiver() {
             override fun onReceive(p0: Context?, intent: Intent?) {
-                onLocalBroadcastReceive(intent)
+                onBaseBroadcastReceive(intent)
             }
         }
     }
 
     /**
-     * IntentFilter for the local Broadcasts. Override this value if you want to
-     * receive broadcasts between BaseActivities. This is set as random Hex by default.
+     * IntentFilter for the local Broadcasts. You have to Override this value if you want to
+     * receive broadcasts between BaseActivities and BaseFragments with [sendBaseBroadcast].
      */
-    protected open val baseBroadcastIntentFilter: String = generateRandomHex()
-
+    protected open val baseBroadcastIntentFilter: String? = null
 
     /**
-     * Send broadcast to BaseActivities with same [baseBroadcastIntentFilter]. Extras in the provided
+     * Override if you need the fragment or activity that started the broadcast
+     * to receive a broadcast notification in [onBaseBroadcastReceive]
+     */
+    protected open val baseBroadcastExcludeSelf: Boolean = true
+
+    /**
+     * Send broadcast to [BaseActivity]s with same [baseBroadcastIntentFilter]. Extras in the provided
      * [intent] will be copied to a new intent with appropriate filter.
      * @param intent Intent
      */
     fun sendBaseBroadcast(intent: Intent) {
-        Intent(baseBroadcastIntentFilter)
-            .apply { putExtras(intent) }
-            .let { localBroadcast.sendBroadcast(it) }
+        baseBroadcastIntentFilter?.let { overriddenFilter ->
+            if (baseBroadcastExcludeSelf) unregisterBaseReceiver()
+            Intent(overriddenFilter)
+                .apply { putExtras(intent) }
+                .let { localBroadcastManager?.sendBroadcast(it) }
+            if (baseBroadcastExcludeSelf) registerBaseReceiver()
+        } ?: "IntentFilter not set. Override baseBroadcastIntentFilter before using this function"
+            .logError("SLANG BaseActivity")
     }
 
     /**
      * Receives broadcasts sent via [sendBaseBroadcast]
      * @param intent Intent?
      */
-    open fun onLocalBroadcastReceive(intent: Intent?) {}
+    open fun onBaseBroadcastReceive(intent: Intent?) {}
 
-
-    override fun onResume() {
-        super.onResume()
-        localBroadcast.registerReceiver(
+    private fun registerBaseReceiver() {
+        localBroadcastManager?.registerReceiver(
             localBroadcastReceiver,
             IntentFilter(baseBroadcastIntentFilter)
         )
+    }
+
+    private fun unregisterBaseReceiver() {
+        localBroadcastManager?.unregisterReceiver(localBroadcastReceiver)
+    }
+    ////////endregion
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        registerBaseReceiver()
 
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        localBroadcast.unregisterReceiver(localBroadcastReceiver)
+        unregisterBaseReceiver()
     }
+
 
 
     /**
-     * Closes the application with a standard warning dialog
-     * @param activity Activity
+     * Override this before using [addFragment]
+     * @return Int?
      */
-    @RequiresApi(Build.VERSION_CODES.JELLY_BEAN)
-    fun closeApplicationDialog() {
-        AlertDialog.Builder(this)
-            .setTitle("Exit the app?")
-            .setPositiveButton("OK") { _, _ ->
-                closeApplication()
-            }
-            .setNegativeButton("Stay") { _, _ -> }
-            .show()
-    }
+    protected abstract fun getFragmentContainer(): Int?
 
 
     /**
@@ -190,9 +200,10 @@ abstract class BaseActivity : AppCompatActivity() {
 
 
     /**
-     * This override is needed for [BaseFragment.onFragmentResume]
+     * Always call super overriding this.
      */
     override fun onBackPressed() {
+        // This override is needed for [BaseFragment.onFragmentResume]
         supportFragmentManager.run {
             when {
                 backStackEntryCount == 0 ->
@@ -205,6 +216,22 @@ abstract class BaseActivity : AppCompatActivity() {
             }
         }
     }
+
+
+    /**
+     * Closes the application with a standard warning dialog
+     */
+    @RequiresApi(Build.VERSION_CODES.JELLY_BEAN)
+    fun closeApplicationDialog() {
+        AlertDialog.Builder(this)
+            .setTitle("Exit the app?")
+            .setPositiveButton("OK") { _, _ ->
+                closeApplication()
+            }
+            .setNegativeButton("Stay") { _, _ -> }
+            .show()
+    }
+
 }
 
 /**

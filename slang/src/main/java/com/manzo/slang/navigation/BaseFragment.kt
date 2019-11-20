@@ -1,15 +1,20 @@
 package com.manzo.slang.navigation
 
+import android.content.BroadcastReceiver
 import android.content.Context
+import android.content.Intent
+import android.content.IntentFilter
 import android.os.Bundle
 import android.support.annotation.CallSuper
 import android.support.annotation.StringRes
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
+import android.support.v4.content.LocalBroadcastManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.manzo.slang.extensions.inflate
+import com.manzo.slang.extensions.logError
 import com.manzo.slang.extensions.string
 import com.manzo.slang.navigation.FragmentAddMethod.ADD_WITH_BACKSTACK
 import com.manzo.slang.navigation.FragmentAddMethod.CLEAR_STACK
@@ -30,13 +35,17 @@ interface FragmentOnBackPressed {
  *
  * ```
  * class testFragment : BaseFragment() {
- *  override fun setLayout(): Int {
- *     return R.layout.your_fragment_layout
- *  }
  *
- *  override fun setupInterface(view: View, savedInstanceState: Bundle?) {
- *        //Here you can work on the interface like you would in onViewCreated
- *  }
+ *      override fun setLayout(): Int {
+ *         return R.layout.your_fragment_layout
+ *      }
+ *      // short version:
+ *      // override fun setLayout() = R.layout.your_fragment_layout
+ *
+ *      override fun setupInterface(view: View, savedInstanceState: Bundle?) {
+ *            //Here you can work on the interface like you would in onViewCreated
+ *      }
+ *
  * }
  * ```
  *
@@ -44,11 +53,79 @@ interface FragmentOnBackPressed {
  * @property backstackChangeListener OnBackStackChangedListener
  */
 abstract class BaseFragment : Fragment(), FragmentOnBackPressed {
-    override fun onFragmentBackPressed() = false
 
     private var positionInBackstack = -1
 
+    ///////////// region Base Broadcast Receiver
+    private val localBroadcastManager by lazy {
+        baseBroadcastIntentFilter?.let { LocalBroadcastManager.getInstance(activity) }
+    }
+
+    private val localBroadcastReceiver by lazy {
+        object : BroadcastReceiver() {
+            override fun onReceive(p0: Context?, intent: Intent?) {
+                onBaseBroadcastReceive(intent)
+            }
+        }
+    }
+
+    private fun unregisterBaseReceiver() {
+        localBroadcastManager?.unregisterReceiver(localBroadcastReceiver)
+    }
+
+    private fun registerBaseReceiver() {
+        localBroadcastManager?.registerReceiver(
+            localBroadcastReceiver,
+            IntentFilter(baseBroadcastIntentFilter)
+        )
+    }
+
+    /**
+     * IntentFilter for the local Broadcasts. You have to Override this value if you want to
+     * receive broadcasts between BaseActivities and BaseFragments with [sendBaseBroadcast].
+     * All fragments or activities with the same [baseBroadcastIntentFilter] will receive the
+     * notification in [onBaseBroadcastReceive]
+     */
+    protected open val baseBroadcastIntentFilter: String? = null
+
+    /**
+     * Override if you need the fragment or activity that started the broadcast
+     * to receive a broadcast notification in [onBaseBroadcastReceive]
+     */
+    protected open val baseBroadcastExcludeSelf: Boolean = true
+
+    /**
+     * Send broadcast to BaseActivities with same [baseBroadcastIntentFilter]. Extras in the provided
+     * [intent] will be copied to a new intent with appropriate filter.
+     * @param intent Intent
+     */
+    fun sendBaseBroadcast(intent: Intent) {
+        baseBroadcastIntentFilter?.let { overriddenFilter ->
+            if (baseBroadcastExcludeSelf) unregisterBaseReceiver()
+            Intent(overriddenFilter)
+                .apply { putExtras(intent) }
+                .let { localBroadcastManager?.sendBroadcast(it) }
+            if (baseBroadcastExcludeSelf) registerBaseReceiver()
+        } ?: "IntentFilter not set. Override baseBroadcastIntentFilter before using this function"
+            .logError("SLANG BaseFragment")
+    }
+
+    /**
+     * Receives broadcasts sent via [sendBaseBroadcast], filtered for
+     * [baseBroadcastIntentFilter]
+     * @param intent Intent?
+     */
+    open fun onBaseBroadcastReceive(intent: Intent?) {}
+
+    ////////////////endregion
+
     val activity by lazy { getActivity() as BaseActivity }
+
+    /**
+     * Use this as you would for Activity.onBackPressed()
+     * @return true if you handled the operation, false otherwise
+     */
+    override fun onFragmentBackPressed() = false
 
     /**
      * set layout resource for the fragment. IE:
@@ -86,10 +163,12 @@ abstract class BaseFragment : Fragment(), FragmentOnBackPressed {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
+
+
         fragmentManager?.run {
             // fix for: fragments added via REPLACE will not fire backstack changes
             if (backStackEntryCount == 0 && positionInBackstack == -1) {
-                onFragmentResume()
+                onFragmentResumeInternal()
             }
             // when fragment is attached, remember position in backstack
             positionInBackstack = backStackEntryCount
@@ -100,7 +179,7 @@ abstract class BaseFragment : Fragment(), FragmentOnBackPressed {
                     when (backStackEntryCount) {
                         positionInBackstack -> {
                             // when position of this fragment is reached, call resume
-                            onFragmentResume()
+                            onFragmentResumeInternal()
                         }
                     }
                 }
@@ -112,12 +191,26 @@ abstract class BaseFragment : Fragment(), FragmentOnBackPressed {
         }
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        unregisterBaseReceiver()
+    }
+
     override fun onDetach() {
         // if fragment is popped, remove listener to avoid false positives
         fragmentManager?.removeOnBackStackChangedListener(backstackChangeListener)
         super.onDetach()
     }
 
+
+    private fun onFragmentResumeInternal() {
+        registerBaseReceiver()
+        onFragmentResume()
+    }
+
+    /**
+     * Fires when fragment is visible to user, indipendently from Activity.onResume().
+     */
     open fun onFragmentResume() {
         //implement when needed
     }
