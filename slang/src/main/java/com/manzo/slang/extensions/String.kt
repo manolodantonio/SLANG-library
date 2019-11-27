@@ -17,6 +17,14 @@ import java.util.*
  */
 const val REGEX_MAC_ADDRESS = "([\\da-fA-f]{2}[:-]){5}[\\da-fA-f]{2}"
 
+
+/**
+ * Alternative constructor for [String.replace]
+ */
+fun String.replace(vararg targets: String, replacement: String, ignoreCase: Boolean = false) =
+    replace(targets.toList(), replacement, ignoreCase)
+
+
 /**
  * Replace all the targets with the provided replacement
  */
