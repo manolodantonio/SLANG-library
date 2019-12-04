@@ -183,7 +183,7 @@ fun <T> RecyclerView.init(
  */
 fun <E> MutableList<E>.toAdapter(
     rowLayout: Int,
-    onItemLayoutClick: ((viewHolder: RecyclerAdapter<E>.ViewHolder, view: View, position: Int, elementData: E) -> Unit)?,
+    onItemLayoutClick: ((viewHolder: RecyclerAdapter<E>.ViewHolder, view: View, position: Int, elementData: E) -> Unit)? = null,
     emptyLayout: Int = 0,
     onBindEmpty: ((emptyHolder: RecyclerAdapter<E>.ViewHolder) -> Unit)? = null,
     onBindContent: (holder: RecyclerAdapter<E>.ViewHolder, position: Int, elementData: E) -> Unit
