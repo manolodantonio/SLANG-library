@@ -33,6 +33,11 @@
             <set />
           </value>
         </entry>
+        <entry key="$USER_HOME$/.gradle/caches/transforms-2/files-2.1/70c796090a84b14aba093ea3e15429d8/recyclerview-v7-28.0.0/jars/classes.jar!/android/support/v7/widget/RecyclerView.class">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$USER_HOME$/.gradle/caches/transforms-2/files-2.1/bcf3de7bb678ecc3bfb8f1d7724b8682/support-compat-28.0.0/jars/classes.jar!/android/support/v4/widget/NestedScrollView.class">
           <value>
             <set />
@@ -553,6 +558,26 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/../EncounterGenerator/app/src/main/java/com/manzo/encountergenerator/adventure/AdventureActivity.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../EncounterGenerator/app/src/main/java/com/manzo/encountergenerator/adventure/AdventureCalendarFragment.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../EncounterGenerator/app/src/main/java/com/manzo/encountergenerator/adventure/AdventureSeedFragment.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../EncounterGenerator/app/src/main/java/com/manzo/encountergenerator/adventure/TravelSeedAdapter.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/../EncounterGenerator/app/src/main/java/com/manzo/encountergenerator/monstersLibrary/BaseMonstersPageFragment.kt">
           <value>
             <set />
@@ -614,6 +639,26 @@
           </value>
         </entry>
         <entry key="$PROJECT_DIR$/../EncounterGenerator/build.gradle">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../ModisPrototype1/app/src/main/java/com/manzo/modisprototype1/MainListFragment.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../ModisPrototype1/app/src/main/java/com/manzo/modisprototype1/PersonDetailFragment.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../ModisPrototype1/app/src/main/res/layout/fragment_person_detail.xml">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../ModisPrototype1/app/src/main/res/layout/row_key_value.xml">
           <value>
             <set />
           </value>

@@ -31,6 +31,10 @@ import java.io.InputStream
 
 var toastAvailable = true
 
+fun Context.toast(message: Int, isLongDuration: Boolean = false, blockToastsTimer: Long = 0) {
+    toast(string(message))
+}
+
 /**
  * Shows a toast, SHORT by default. Avoids "java.lang.RuntimeException: Can't create handler inside thread that has not called Looper.prepare()"
  * @receiver Context
