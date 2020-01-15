@@ -15,31 +15,35 @@ infix fun <T> Collection<T>.isNotEqualValues(collection: Collection<T>) =
 /**
  * Extension function to add an object to a list if not already present
  */
-fun <OB> OB.addIfUnique(targerList: MutableList<OB>): Boolean {
+fun <OB> OB.addIfUnique(targetList: MutableList<OB>): Boolean {
     when (this) {
         null -> return false
-        is String -> if (this.isBlank()) return false
+        is String -> if (isBlank()) return false
     }
 
-    return if (!targerList.contains(this)) targerList.add(this) else false
+    return if (!targetList.contains(this)) targetList.add(this) else false
 }
 
 /**
  * Extension function to add an object to a list if not already present
  */
 fun <OB> List<OB>.addIfUnique(item: OB): Boolean {
-    return item.addIfUnique(this as MutableList<OB>)
+    return item.addIfUnique(asMutable())
 }
 
 /**
- * Cast list to mutable list, or returns new empty list if original list is empty (list cannot be cast to mutable if empty)
+ * Cast list to mutable list
  * @receiver List<T>
  * @return MutableList<T>
  */
-fun <T> List<T>.asSafeMutable(): MutableList<T> {
-    //todo see if empty list can be cast to mutable specifying the type -> this as MutableList<T>
-    return (if (isNotEmpty()) this as MutableList else mutableListOf())
-}
+fun <T> List<T>.asSafeMutable() = asMutable()
+
+/**
+ * Cast list to mutable list
+ * @receiver List<T>
+ * @return MutableList<T>
+ */
+fun <T> List<T>.asMutable() = this as MutableList<T>
 
 /**
  * Replaces with the provided newValue every object in the list that matches the conditionBlock
