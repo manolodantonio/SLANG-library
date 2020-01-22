@@ -13,6 +13,7 @@ import java.net.InetSocketAddress
 import java.net.Socket
 import java.nio.ByteBuffer
 import java.nio.ByteOrder
+import java.text.SimpleDateFormat
 import java.util.*
 
 /**
@@ -159,18 +160,20 @@ fun generateRandomHex(): String =
     Integer.toHexString(Random().nextInt())
 
 /**
- * Returns current clock time.
+ * Returns current clock time. Default time format HH:mm:ss
+ *
+ * For time formats check [SimpleDateFormat]
+ *
  * @param printSeconds Boolean
+ * @param timeFormat String?
  * @return String
  */
-fun getTime(printSeconds: Boolean = false): String {
-    GregorianCalendar().run {
-        val hour = get(Calendar.HOUR_OF_DAY)
-        val minute = get(Calendar.MINUTE)
-
-        return "$hour:$minute".let {
-            if (printSeconds) "$it:${get(Calendar.SECOND)}"
+fun getTime(printSeconds: Boolean = false, timeFormat: String? = null): String {
+    val timePattern = timeFormat
+        ?: "HH:mm".let {
+            if (printSeconds) "$it:ss"
             else it
         }
-    }
+    return SimpleDateFormat(timePattern, Locale.getDefault())
+        .format(Calendar.getInstance().time)
 }
