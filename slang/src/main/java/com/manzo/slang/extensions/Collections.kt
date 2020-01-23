@@ -76,6 +76,8 @@ fun <T> MutableCollection<T>.removeFirst(conditionBlock: (listElement: T) -> Boo
  * @param conditionBlock Function1<T, Boolean>
  */
 fun <T> MutableCollection<T>.remove(conditionBlock: (listElement: T) -> Boolean) {
-    forEach { if (conditionBlock(it)) remove(it) }
+    iterator().let { iterator ->
+        iterator.forEach { if (conditionBlock(it)) iterator.remove() }
+    }
 }
 
