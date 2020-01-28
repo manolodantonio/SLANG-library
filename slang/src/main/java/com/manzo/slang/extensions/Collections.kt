@@ -32,11 +32,13 @@ fun <OB> List<OB>.addIfUnique(item: OB): Boolean {
 }
 
 /**
- * Cast list to mutable list
+ * Cast list to mutable list, or returns new empty list if original list is empty (list cannot be cast to mutable if empty)
  * @receiver List<T>
  * @return MutableList<T>
  */
-fun <T> List<T>.asSafeMutable() = asMutable()
+fun <T> List<T>.asSafeMutable(): MutableList<T> {
+    return (if (isNotEmpty()) this as MutableList else mutableListOf())
+}
 
 /**
  * Cast list to mutable list
