@@ -23,6 +23,11 @@
             <set />
           </value>
         </entry>
+        <entry key="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib-common/1.3.41/8f361846168f853fb213b0ab02d193f02644548/kotlin-stdlib-common-1.3.41-sources.jar!/generated/_Collections.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$USER_HOME$/.gradle/caches/transforms-2/files-2.1/1afc02353749798c50aabe91db6c018d/support-fragment-28.0.0/jars/classes.jar!/android/support/v4/app/Fragment.class">
           <value>
             <set />
@@ -673,6 +678,11 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/../RetrofitCoroutines/app/src/main/java/com/manzo/retrofit_coroutines/MainActivity.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/../fca_uconnect_android/app/src/main/java/com/fcagroup/global/myuconnect/utils/AndroidUtils.kt">
           <value>
             <set />
@@ -854,6 +864,11 @@
           </value>
         </entry>
         <entry key="$PROJECT_DIR$/slang/src/main/java/com/manzo/slang/extensions/Global.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/slang/src/main/java/com/manzo/slang/extensions/ImageView.kt">
           <value>
             <set />
           </value>

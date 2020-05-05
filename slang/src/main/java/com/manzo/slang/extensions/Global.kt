@@ -38,7 +38,7 @@ fun getLogs() =
  * @param block Function0<Unit>
  */
 fun delayed(waitMillis: Long = 1000, block: () -> Unit) {
-    Handler().postDelayed(block, waitMillis)
+    Handler().postDelayed({ block() }, waitMillis)
 }
 
 /**
@@ -172,6 +172,27 @@ fun getTime(printSeconds: Boolean = false, timeFormat: String? = null): String {
     val timePattern = timeFormat
         ?: "HH:mm".let {
             if (printSeconds) "$it:ss"
+            else it
+        }
+    return SimpleDateFormat(timePattern, Locale.getDefault())
+        .format(Calendar.getInstance().time)
+}
+
+
+/**
+ * Returns current date. Default time format yyyy-MM-dd
+ *
+ * For time formats check [SimpleDateFormat]
+ *
+ *
+ * @param showYear Boolean
+ * @param timeFormat String?
+ * @return String
+ */
+fun getDate(showYear: Boolean = true, timeFormat: String? = null): String {
+    val timePattern = timeFormat
+        ?: "MM-dd".let {
+            if (showYear) "yyyy-$it"
             else it
         }
     return SimpleDateFormat(timePattern, Locale.getDefault())

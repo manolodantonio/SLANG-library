@@ -13,7 +13,10 @@ infix fun <T> Collection<T>.isNotEqualValues(collection: Collection<T>) =
     !(this isEqualValues collection)
 
 /**
- * Extension function to add an object to a list if not already present
+ * Add an object to a list if not already present, null or blank
+ * @receiver OB any object
+ * @param targetList MutableList<OB>
+ * @return Boolean result of the operation
  */
 fun <OB> OB.addIfUnique(targetList: MutableList<OB>): Boolean {
     when (this) {
@@ -25,7 +28,10 @@ fun <OB> OB.addIfUnique(targetList: MutableList<OB>): Boolean {
 }
 
 /**
- * Extension function to add an object to a list if not already present
+ * Add an object to a list if not already present, null or blank
+ * @receiver List<OB>
+ * @param item OB any object
+ * @return Boolean result of the operation
  */
 fun <OB> List<OB>.addIfUnique(item: OB): Boolean {
     return item.addIfUnique(asMutable())
@@ -67,7 +73,7 @@ fun <T> MutableList<T>.replace(newValue: T, conditionBlock: (listElement: T) -> 
  * @return True if condition is found and removal is successful.
  */
 fun <T> MutableCollection<T>.removeFirst(conditionBlock: (listElement: T) -> Boolean): Boolean {
-    return find { conditionBlock.invoke(it) }?.let { remove(it) } ?: false
+    return find { conditionBlock(it) }?.let { remove(it) } ?: false
 }
 
 /**

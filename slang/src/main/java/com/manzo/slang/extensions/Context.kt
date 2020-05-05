@@ -158,13 +158,15 @@ fun Context.defaultPrefs(): SharedPreferences = PreferenceManager.getDefaultShar
 
 
 /**
- * Saves app log to target internal file. Creates or overrides the file.
- * @receiver Activity
+ * Saves app log to target internal file. Creates the file if needed.
+ * Set the file content or [append]s to its content.
+ * @receiver Context
  * @param targetFile String
+ * @param append Boolean
  * @return File
  */
-fun Context.saveLogsToFile(targetFile: String) =
-    getLogs().writeToInternalFile(this, targetFile)
+fun Context.saveLogsToFile(targetFile: String, append: Boolean = false) =
+    getLogs().writeToInternalFile(this, targetFile, append)
 
 
 /**

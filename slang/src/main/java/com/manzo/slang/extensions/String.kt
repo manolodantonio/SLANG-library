@@ -103,11 +103,17 @@ fun CharSequence?.isNotNullOrBlank() = !isNullOrBlank()
 
 /**
  * Write string to a target file. Creates the file if needed.
+ * @receiver String
+ * @param context Context
+ * @param filename String
+ * @param append Boolean
+ * @return File
  */
-fun String.writeToInternalFile(context: Context, filename: String) =
+fun String.writeToInternalFile(context: Context, filename: String, append: Boolean = false) =
     context.getInternalFile(filename)
         .apply {
-            writeText(this@writeToInternalFile)
+            if (append) appendText(this@writeToInternalFile)
+            else writeText(this@writeToInternalFile)
         }
 
 

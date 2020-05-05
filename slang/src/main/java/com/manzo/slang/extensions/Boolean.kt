@@ -10,7 +10,7 @@ package com.manzo.slang.extensions
  * @param block Function0<Unit>
  */
 fun Boolean.ifTrue(block: () -> Unit) {
-    takeIf { it }?.run { block.invoke() }
+    takeIf { it }?.run { block() }
 }
 
 
@@ -20,5 +20,13 @@ fun Boolean.ifTrue(block: () -> Unit) {
  * @param block Function0<Unit>
  */
 fun Boolean.ifFalse(block: () -> Unit) {
-    takeIf { !it }?.run { block.invoke() }
+    takeIf { !it }?.run { block() }
 }
+
+
+/**
+ * Returns true = 1, false = 0
+ * @receiver Boolean
+ * @return Int
+ */
+fun Boolean.toInt() = if (this) 1 else 0
