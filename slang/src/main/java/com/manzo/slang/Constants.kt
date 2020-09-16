@@ -5,14 +5,24 @@ package com.manzo.slang
  */
 
 /**
- * Matches literal unicode characters
- */
-const val REGEX_UNICODE_CHARACTER = "\\p{L}"
+ * Matches unicode letters excluding numbers and special characters
+ * */
+const val REGEX_UNICODE_CHARACTER = "[\\p{L}]"
 
 /**
- * Matches unicode text including numbers and punctuation
+ * Matches unicode Uppercase letters excluding numbers and special characters
+ * */
+const val REGEX_UNICODE_UPPERCASE_CHARACTER = "[\\p{Lu}]"
+
+/**
+ * Matches unicode text including numbers and special characters
  */
-const val REGEX_UNICODE_TEXT = "[\\p{L} \\d!?\"',.;:()]"
+const val REGEX_UNICODE_TEXT = "[^\\p{L} ]"
+
+/**
+ * Matches numbers
+ */
+const val REGEX_NUMBERS = "[\\d]"
 
 /**
  * Matches special characters including punctuation
