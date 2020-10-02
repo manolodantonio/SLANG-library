@@ -32,7 +32,7 @@ import java.io.InputStream
 var toastAvailable = true
 
 fun Context.toast(message: Int, isLongDuration: Boolean = false, blockToastsTimer: Long = 0) {
-    toast(string(message))
+    toast(string(message), isLongDuration, blockToastsTimer)
 }
 
 /**
