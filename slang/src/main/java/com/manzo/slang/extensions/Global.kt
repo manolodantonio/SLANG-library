@@ -5,6 +5,7 @@ import android.annotation.TargetApi
 import android.content.Context
 import android.net.ConnectivityManager
 import android.net.wifi.WifiManager
+import android.os.Build
 import android.os.Handler
 import android.support.annotation.RequiresPermission
 import java.io.File
@@ -97,18 +98,21 @@ fun getHostName(hostIp: String): String = InetAddress.getByName(hostIp).canonica
 
 /**
  * Searches ARP table of the device for a MAC address matching the provided IP
+ * This will not work on Android 10+
  * @param ipAddress String
  * @return String
  */
 @TargetApi(28)
 fun getMacFromARP(ipAddress: String) =
-    try {
-        File("/proc/net/arp").run {
-            findLine(ipAddress).findMAC()
+    if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.P) {
+        try {
+            File("/proc/net/arp").run {
+                findLine(ipAddress).findMAC()
+            }
+        } catch (e: java.lang.Exception) {
+            ""
         }
-    } catch (e: java.lang.Exception) {
-        ""
-    }
+    } else ""
 
 
 /**
