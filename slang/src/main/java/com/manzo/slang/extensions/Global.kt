@@ -117,6 +117,7 @@ fun getMacFromARP(ipAddress: String) =
 
 /**
  * Returns a list of Pair<IpAddres, MacAddress>
+ * This will not work on Android 10+
  * @param ipList List<String>
  * @return List<Pair<String, String>>
  */
