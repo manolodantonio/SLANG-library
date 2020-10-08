@@ -1,6 +1,7 @@
 package com.manzo.slang.extensions
 
 import android.Manifest
+import android.annotation.TargetApi
 import android.content.Context
 import android.net.ConnectivityManager
 import android.net.wifi.WifiManager
@@ -99,9 +100,14 @@ fun getHostName(hostIp: String): String = InetAddress.getByName(hostIp).canonica
  * @param ipAddress String
  * @return String
  */
+@TargetApi(28)
 fun getMacFromARP(ipAddress: String) =
-    File("/proc/net/arp").run {
-        findLine(ipAddress).findMAC()
+    try {
+        File("/proc/net/arp").run {
+            findLine(ipAddress).findMAC()
+        }
+    } catch (e: java.lang.Exception) {
+        ""
     }
 
 
@@ -110,6 +116,7 @@ fun getMacFromARP(ipAddress: String) =
  * @param ipList List<String>
  * @return List<Pair<String, String>>
  */
+@TargetApi(28)
 fun getMacFromARP(ipList: List<String>): List<Pair<String, String>> {
     val result = mutableListOf<Pair<String, String>>()
     ipList.forEach {
