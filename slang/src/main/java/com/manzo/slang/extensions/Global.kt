@@ -1,6 +1,7 @@
 package com.manzo.slang.extensions
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.annotation.TargetApi
 import android.content.Context
 import android.net.ConnectivityManager
@@ -21,6 +22,9 @@ import java.util.*
 /**
  * Created by Manolo D'Antonio on 29/08/2019
  */
+
+private fun getWifiManager(context: Context) =
+    context.applicationContext.getSystemService(Context.WIFI_SERVICE) as WifiManager
 
 
 /**
@@ -71,7 +75,7 @@ fun isNetworkUnavailable(context: Context) = !isNetworkAvailable(context)
  */
 @RequiresPermission(Manifest.permission.ACCESS_WIFI_STATE)
 fun getMyIPfromWifi(context: Context): String {
-    return (context.applicationContext.getSystemService(Context.WIFI_SERVICE) as WifiManager)
+    return (getWifiManager(context))
         .run {
             connectionInfo.ipAddress
         }
@@ -103,7 +107,7 @@ fun getHostName(hostIp: String): String = InetAddress.getByName(hostIp).canonica
  * @return String
  */
 @TargetApi(28)
-fun getMacFromARP(ipAddress: String) =
+private fun getMacFromARP(ipAddress: String) =
     if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.P) {
         try {
             File("/proc/net/arp").run {
@@ -116,16 +120,31 @@ fun getMacFromARP(ipAddress: String) =
 
 
 /**
- * Returns a list of Pair<IpAddres, MacAddress>
- * This will not work on Android 10+
+ * Returns a list of Pair<IpAddress, MacAddress>
+ * This will not work on Android 10+, use [getMacFromAddress]
  * @param ipList List<String>
  * @return List<Pair<String, String>>
  */
 @TargetApi(28)
-fun getMacFromARP(ipList: List<String>): List<Pair<String, String>> {
+fun getMacFromARP(vararg ipList: String): List<Pair<String, String>> {
     val result = mutableListOf<Pair<String, String>>()
     ipList.forEach {
         result.add(Pair(it, getMacFromARP(it)))
+    }
+    return result
+}
+
+/**
+ * Returns a list of Pair<IpAddress, MacAddress>
+ * @param ipList List<String>
+ * @return List<Pair<String, String>>
+ */
+@SuppressLint("HardwareIds")
+fun getMacFromAddress(context: Context, vararg ipList: String): List<Pair<String, String>> {
+    val result = mutableListOf<Pair<String, String>>()
+    val wifiManager = getWifiManager(context)
+    ipList.forEach {
+        result.add(Pair(it, wifiManager.connectionInfo.macAddress))
     }
     return result
 }
@@ -210,3 +229,5 @@ fun getDate(showYear: Boolean = true, timeFormat: String? = null): String {
     return SimpleDateFormat(timePattern, Locale.getDefault())
         .format(Calendar.getInstance().time)
 }
+
+
