@@ -154,7 +154,8 @@ fun Context.isFingerprintAvailable(): Boolean {
  * @receiver Context
  * @return (android.content.SharedPreferences..android.content.SharedPreferences?)
  */
-fun Context.defaultPrefs(): SharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
+fun Context.defaultPrefs(): SharedPreferences =
+    PreferenceManager.getDefaultSharedPreferences(applicationContext)
 
 
 /**
