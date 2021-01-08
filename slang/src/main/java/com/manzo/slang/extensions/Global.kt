@@ -9,6 +9,9 @@ import android.net.wifi.WifiManager
 import android.os.Build
 import android.os.Handler
 import android.support.annotation.RequiresPermission
+import com.manzo.slang.helpers.ArpScanner
+import com.manzo.slang.helpers.DEFAULT_SCAN_PORT
+import com.manzo.slang.helpers.DEFAULT_SCAN_TIMEOUT
 import java.io.File
 import java.io.IOException
 import java.net.InetAddress
@@ -121,10 +124,11 @@ private fun getMacFromARP(ipAddress: String) =
 
 /**
  * Returns a list of Pair<IpAddress, MacAddress>
- * This will not work on Android 10+, use [getMacFromAddress]
+ * This will not work on Android 10+, use [getMacFromAddress] or ArpScanner helper
  * @param ipList List<String>
  * @return List<Pair<String, String>>
  */
+@Deprecated("Use getMacFromAddress or ArpScanner")
 @TargetApi(28)
 fun getMacFromARP(vararg ipList: String): List<Pair<String, String>> {
     val result = mutableListOf<Pair<String, String>>()
@@ -140,13 +144,11 @@ fun getMacFromARP(vararg ipList: String): List<Pair<String, String>> {
  * @return List<Pair<String, String>>
  */
 @SuppressLint("HardwareIds")
-fun getMacFromAddress(context: Context, vararg ipList: String): List<Pair<String, String>> {
-    val result = mutableListOf<Pair<String, String>>()
-    val wifiManager = getWifiManager(context)
-    ipList.forEach {
-        result.add(Pair(it, wifiManager.connectionInfo.macAddress))
-    }
-    return result
+suspend fun getMacFromAddress(context: Context, vararg ipList: String): List<Pair<String, String>> {
+    return ArpScanner.getArpTable()
+        .map { it.value }
+        .filter { ipList.contains(it.ip.hostAddress) }
+        .map { it.ip.hostAddress to it.hwAddress.address }
 }
 
 
@@ -162,7 +164,11 @@ fun getMacFromAddress(context: Context, vararg ipList: String): List<Pair<String
  * @param scanTimeoutMillis Int
  * @return Boolean
  */
-fun checkAddressReachable(address: String, port: Int = 22, scanTimeoutMillis: Int = 500): Boolean {
+fun checkAddressReachable(
+    address: String,
+    port: Int = DEFAULT_SCAN_PORT,
+    scanTimeoutMillis: Int = DEFAULT_SCAN_TIMEOUT
+): Boolean {
     val sockaddr = InetSocketAddress(address, port)
     val socket = Socket()
     var online = true

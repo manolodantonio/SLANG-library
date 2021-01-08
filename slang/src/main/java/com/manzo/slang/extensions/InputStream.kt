@@ -1,5 +1,6 @@
 package com.manzo.slang.extensions
 
+import com.manzo.slang.REGEX_WHITESPACE
 import java.io.InputStream
 
 /**
@@ -28,3 +29,13 @@ fun InputStream.text(maxLines: Int = 0): String {
     }
     return result
 }
+
+/**
+ * Reads the InputStream as string and returns a bidimensional list,
+ * with whitespace as default separator
+ * @receiver InputStream
+ * @param separator String: can be a string or a regex pattern in string format
+ * @return List<List<String>>
+ */
+fun InputStream.readAsTable(separator: String = REGEX_WHITESPACE): List<List<String>> =
+    text().lines().map { it.split(separator.toRegex()) }

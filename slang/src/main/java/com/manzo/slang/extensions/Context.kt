@@ -3,6 +3,7 @@ package com.manzo.slang.extensions
 import android.Manifest
 import android.annotation.TargetApi
 import android.app.Activity
+import android.app.ActivityManager
 import android.app.Application
 import android.content.Context
 import android.content.ContextWrapper
@@ -318,3 +319,10 @@ fun Context.sendLocalBroadcast(intentFilter: String, data: Map<String, String>? 
 fun Context.sendLocalBroadcast(intent: Intent) {
     LocalBroadcastManager.getInstance(this).sendBroadcast(intent)
 }
+
+@Suppress("DEPRECATION") // Deprecated for third party Services.
+inline fun <reified T> Context.isServiceRunningForeground() =
+    (getSystemService(Context.ACTIVITY_SERVICE) as? ActivityManager)
+        ?.getRunningServices(Integer.MAX_VALUE)
+        ?.find { it.service.className == T::class.java.name }
+        ?.foreground == true

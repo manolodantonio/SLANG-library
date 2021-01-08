@@ -2,14 +2,28 @@ package com.manzo.slang.extensions
 
 import android.app.Activity
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Build
 import android.support.annotation.RequiresApi
+import com.manzo.slang.PKG_NAME_GOOGLE_CHROME
 import com.manzo.slang.extensions.gears.checkPermissions
 
 /**
  * Created by Manolo D'Antonio
  */
+
+
+/**
+ * Activity extension for [checkPermissions]
+ * @receiver Activity
+ * @param requestCode Int
+ * @param permissions Array<out String>
+ * @return Boolean
+ */
+fun Activity.checkPermissions(requestCode: Int, vararg permissions: String) =
+    checkPermissions(this, requestCode, *permissions)
+
 
 /**
  * Hide softKeyboard. Needs [Activity.getCurrentFocus] to not be null.
@@ -115,15 +129,38 @@ fun Activity.shareText(text: String, title: String? = null, imageUri: Uri? = nul
 }
 
 
+/**
+ *
+ * @receiver Context
+ * @param address String : Url to open
+ * @param openWithChrome Boolean : Force open with Google Chrome. Default false
+ * @return Boolean : operation success
+ */
+fun Activity.navigateToUrl(address: String, openWithChrome: Boolean = false): Boolean {
+    return Intent(Intent.ACTION_VIEW, Uri.parse(address))
+        .apply {
+            if (openWithChrome && checkAppInstalled(PKG_NAME_GOOGLE_CHROME))
+                setPackage(PKG_NAME_GOOGLE_CHROME)
+        }
+        .start(this)
+}
 
 /**
- * Activity extension for [checkPermissions]
- * @receiver Activity
- * @param requestCode Int
- * @param permissions Array<out String>
- * @return Boolean
+ * Check package manager for app package name
+ * @receiver Context
+ * @param packageName String
+ * @param minVersion Int : optional. Check if app version is at least this value.
+ * @return Boolean : true if is installed
  */
-fun Activity.checkPermissions(requestCode: Int, vararg permissions: String) =
-    checkPermissions(this, requestCode, *permissions)
+fun Activity.checkAppInstalled(packageName: String, minVersion: Int = -1): Boolean {
+    return try {
+        packageManager.getPackageInfo(packageName, PackageManager.GET_ACTIVITIES).run {
+            if (minVersion == -1) true
+            else minVersion <= versionName.split(".")[0].toInt()
+        }
+    } catch (e: Exception) {
+        false
+    }
+}
 
 

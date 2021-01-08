@@ -20,6 +20,12 @@ const val REGEX_UNICODE_UPPERCASE_CHARACTER = "[\\p{Lu}]"
 const val REGEX_UNICODE_TEXT = "[^\\p{L} ]"
 
 /**
+ * Matches unicode text linebreaks
+ */
+const val REGEX_UNICODE_LINEBREAK =
+    "\\u000D\\u000A|[\\u000A\\u000B\\u000C\\u000D\\u0085\\u2028\\u2029]"
+
+/**
  * Matches numbers
  */
 const val REGEX_NUMBERS = "[\\d]"
@@ -29,3 +35,12 @@ const val REGEX_NUMBERS = "[\\d]"
  */
 const val REGEX_SPECIAL_CHAR = "[^\\p{L} \\d]"
 
+/**
+ * Matches whitespace character
+ */
+const val REGEX_WHITESPACE = "\\s+"
+
+/**
+ * Google chrome package name
+ */
+const val PKG_NAME_GOOGLE_CHROME = "com.android.chrome"
