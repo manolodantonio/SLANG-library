@@ -107,8 +107,8 @@ class PingScanner(
                             var isReachable = ipAddress.isReachable(scanTimeout)
                             if (isReachable) isReachable = checkAddressReachable(
                                 ipAddress.hostAddress,
-                                scanTimeout,
-                                scanPort
+                                scanPort,
+                                scanTimeout
                             )
                             val result =
                                 ScanResult(
