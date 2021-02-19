@@ -1,5 +1,10 @@
 package com.manzo.slang.extensions
 
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.async
+import kotlinx.coroutines.awaitAll
+import kotlinx.coroutines.withContext
+
 /**
  * Compare the values of the objects of 2 lists
  */
@@ -89,3 +94,38 @@ fun <T> MutableCollection<T>.remove(conditionBlock: (listElement: T) -> Boolean)
     }
 }
 
+
+/**
+ * Returns a list containing the results of applying the given [transform] function to each element in the original list.
+ * The list is splitted in chunks so that multiple suspend [transform]s can be executed in parallel using [async].
+ *
+ *
+ * --- example ---
+ *
+ * val pingResults = ipAddresses.mapAsync(coroutineScope) { pingAddress(it) }
+ *
+ *
+ * @receiver List<T>
+ * @param scope C - a [CoroutineScope]
+ * @param chunkSize - Int size of the chunks
+ * @param transform - the operation to perform
+ * @return List<R>
+ */
+suspend fun <T, R, C : CoroutineScope> Collection<T>.mapAsync(
+    scope: C,
+    chunkSize: Int = 4,
+    transform: suspend (element: T) -> R
+): Collection<R> {
+    return withContext(scope.coroutineContext) {
+        asSequence()
+            .chunked(chunkSize)
+            .map { sublist ->
+                async {
+                    sublist.map { transform(it) }
+                }
+            }
+            .toList()
+            .awaitAll()
+            .flatten()
+    }
+}

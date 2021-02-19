@@ -3,13 +3,13 @@ package com.manzo.slang.extensions
 import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Bitmap
+import android.graphics.Rect
 import android.graphics.drawable.Drawable
 import android.graphics.drawable.VectorDrawable
 import android.net.Uri
 import android.os.Build
 import android.support.annotation.DrawableRes
 import android.support.annotation.LayoutRes
-import android.support.annotation.RequiresApi
 import android.support.constraint.Group
 import android.support.design.widget.Snackbar
 import android.support.transition.AutoTransition
@@ -227,6 +227,17 @@ fun View.snack(message: String, duration: Int = Snackbar.LENGTH_SHORT, blockSnac
 }
 
 /**
+ * Resource version of [View.snack]
+ * @receiver View
+ * @param message Int
+ * @param duration Int
+ * @param blockSnacksTimer Long
+ */
+fun View.snack(message: Int, duration: Int = Snackbar.LENGTH_SHORT, blockSnacksTimer: Long = 0) {
+    snack(string(message), duration, blockSnacksTimer)
+}
+
+/**
  * Extension method to provide simpler access to {@link View#getResources()#getString(int)}.
  */
 fun View.string(stringResId: Int): String = context.string(stringResId)
@@ -301,12 +312,23 @@ fun Group.setAllOnClickListener(typeClickListener: (view: View) -> Unit): Group 
 /**
  * Convenience function for global observer
  */
-@RequiresApi(Build.VERSION_CODES.JELLY_BEAN)
 fun View.onGlobalLayout(listener: () -> Unit) {
-    viewTreeObserver.addOnGlobalLayoutListener(object : ViewTreeObserver.OnGlobalLayoutListener {
-        override fun onGlobalLayout() {
-            viewTreeObserver.removeOnGlobalLayoutListener(this)
-            listener.invoke()
-        }
-    })
+    viewTreeObserver.addOnGlobalLayoutListener { listener.invoke() }
+}
+
+
+/**
+ * Uses [ViewTreeObserver.addOnGlobalLayoutListener] to check if a softKeyboard is going up or down.
+ * @param view View
+ * @param onShow result
+ */
+fun onSoftKeyboard(view: View, onShow: (isUp: Boolean) -> Unit) {
+    view.onGlobalLayout {
+        val r = Rect()
+        view.getWindowVisibleDisplayFrame(r)
+        val heightDiff = view.rootView.height - (r.bottom - r.top)
+
+        // if more than 200 pixels, it's probably a keyboard...
+        onShow(heightDiff > 200)
+    }
 }

@@ -12,8 +12,9 @@ import android.support.annotation.RequiresPermission
 import com.manzo.slang.helpers.ArpScanner
 import com.manzo.slang.helpers.DEFAULT_SCAN_PORT
 import com.manzo.slang.helpers.DEFAULT_SCAN_TIMEOUT
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import java.io.File
-import java.io.IOException
 import java.net.InetAddress
 import java.net.InetSocketAddress
 import java.net.Socket
@@ -155,38 +156,36 @@ suspend fun getMacFromAddress(context: Context, vararg ipList: String): List<Pai
 /**
  * Checks if this address is available on the wifi network.
  *
- * WARNING! DON'T RUN ON MAIN THREAD!
- *
- * Always false if on the main thread!
- *
  * @param address String
  * @param port Int
  * @param scanTimeoutMillis Int
  * @return Boolean
  */
-fun checkAddressReachable(
+suspend fun checkAddressReachable(
     address: String,
     port: Int = DEFAULT_SCAN_PORT,
     scanTimeoutMillis: Int = DEFAULT_SCAN_TIMEOUT
 ): Boolean {
-    val sockaddr = InetSocketAddress(address, port)
-    val socket = Socket()
-    var online = true
 
-    try {
-        socket.connect(sockaddr, scanTimeoutMillis)
-    } catch (e: Exception) {
-        online = false
-        e.logError()
-    } finally {
-        try {
-            socket.close()
-        } catch (e: IOException) {
-            // close() operation can also throw an IOException
-        }
+    return withContext(Dispatchers.IO) {
 
-        return online
+        val sockaddr = InetSocketAddress(address, port)
+        val socket = Socket()
+        var online = true
+
+        runCatching { socket.connect(sockaddr, scanTimeoutMillis) }
+            .onFailure {
+                online = false
+                it.logError()
+            }
+
+        // close() operation can also throw an IOException
+        runCatching { socket.close() }
+            .onFailure { it.logError() }
+
+        online
     }
+
 }
 
 /**

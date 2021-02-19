@@ -87,7 +87,7 @@ object ArpScanner {
 class PingScanner(
     private val myIP: String,
     private val scanTimeout: Int = DEFAULT_SCAN_TIMEOUT,
-    private val scanPort: Int = DEFAULT_SCAN_PORT,
+    private val scanPort: Int = -1,
     val onUpdate: (ScanResult) -> Unit
 ) {
 
@@ -104,12 +104,16 @@ class PingScanner(
                 .map { ipAddresses ->
                     async {
                         ipAddresses.map { ipAddress ->
-                            var isReachable = ipAddress.isReachable(scanTimeout)
-                            if (isReachable) isReachable = checkAddressReachable(
-                                ipAddress.hostAddress,
-                                scanPort,
-                                scanTimeout
-                            )
+                            val isReachable =
+                                if (scanPort == -1) {
+                                    ipAddress.isReachable(scanTimeout)
+                                } else {
+                                    checkAddressReachable(
+                                        ipAddress.hostAddress,
+                                        scanPort,
+                                        scanTimeout
+                                    )
+                                }
                             val result =
                                 ScanResult(
                                     ipAddress,
@@ -126,6 +130,7 @@ class PingScanner(
                 .awaitAll()
                 .flatten()
                 .filter { it.isReachable }
+
         }
 
     data class ScanResult(
